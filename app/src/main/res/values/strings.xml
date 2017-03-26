@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">MyFitnessApp</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="password">Password&#8230;</string>
+    <string name="usename">Username&#8230;</string>
+    <string name="create_a_username">Create a username</string>
+    <string name="email">Email&#8230;</string>
+    <string name="sign_up_edit">Sign Up</string>
 </resources>
