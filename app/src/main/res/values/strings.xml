@@ -6,4 +6,8 @@
     <string name="create_a_username">Create a username</string>
     <string name="email">Email&#8230;</string>
     <string name="sign_up_edit">Sign Up</string>
+    <string name="login">Login</string>
+    <string name="google">Google</string>
+    <string name="facebook">Facebook</string>
+    <string name="logout">logout</string>
 </resources>

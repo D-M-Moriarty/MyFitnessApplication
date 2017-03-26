@@ -117,8 +117,8 @@ public class SignUpActivity extends AppCompatActivity {
 
                                 mProgressDialog.dismiss();
 
-//                                Intent mainIntent = new Intent(RegisterActivity.this, AccountActivity.class);
-//                                startActivity(mainIntent);
+                                Intent mainIntent = new Intent(SignUpActivity.this, HomeScreen.class);
+                                startActivity(mainIntent);
 
                             }
 
