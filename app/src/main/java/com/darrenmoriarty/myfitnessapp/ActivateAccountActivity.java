@@ -49,17 +49,12 @@ public class ActivateAccountActivity extends AppCompatActivity {
         calorieGoalTextView = (TextView) findViewById(R.id.calorieGoalTextView);
 
 
+        BMRTextView.setText(DetailsSignUpActivity.BMRString);
+        BMITextView.setText(DetailsSignUpActivity.BMIString);
+        TDEETextView.setText(DetailsSignUpActivity.TDEEString);
+        calorieGoalTextView.setText(DetailsSignUpActivity.calorieGoal);
 
-        Bundle b =  getIntent().getExtras();
 
-        if (b != null) {
-
-            BMRTextView.setText(b.getString("BMR"));
-            BMITextView.setText(b.getString("BMI"));
-            TDEETextView.setText(b.getString("TDEE"));
-            calorieGoalTextView.setText(b.getString("Calorie Goal"));
-
-        }
 
         findViewById(R.id.activateButton).setOnClickListener(new View.OnClickListener() {
             @Override
