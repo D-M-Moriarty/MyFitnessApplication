@@ -26,6 +26,21 @@ public class SignUpActivity extends AppCompatActivity {
     private EditText mEmailField;
     private EditText mUsername;
 
+    private String username;
+    private String weightGoals;
+    private String currentActivity;
+    private String gender;
+    private String DOB;
+    private String BMR;
+    private String BMI;
+    private String TDEE;
+    private String calorieGoal;
+    private String height;
+    private String weight;
+    private String emailAddress;
+    private String fullname;
+    private String password;
+
     private Button mSignUpButton;
 
     // [START declare_auth]
@@ -43,6 +58,17 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
+//        BMR = getIntent().getStringExtra("BMR");
+//        BMI = getIntent().getStringExtra("BMI");
+//        TDEE = getIntent().getStringExtra("TDEE");
+//        calorieGoal = getIntent().getStringExtra("CalorieGoal");
+//        weightGoals = getIntent().getStringExtra("WeightGoal");
+//        currentActivity = getIntent().getStringExtra("CurrentActivity");
+//        fullname = getIntent().getStringExtra("Fullname");
+//        weight = getIntent().getStringExtra("Weight");
+//        height = getIntent().getStringExtra("Height");
+//        gender = getIntent().getStringExtra("Gender");
+
 
         setTitle("Sign Up Activity");
 
@@ -59,6 +85,8 @@ public class SignUpActivity extends AppCompatActivity {
 
         // Sign Up Button
         mSignUpButton  =(Button) findViewById(R.id.signUpButton);
+
+
 
         // Progress Dialog
         mProgressDialog = new ProgressDialog(this);
@@ -114,10 +142,20 @@ public class SignUpActivity extends AppCompatActivity {
                                 DatabaseReference currentUserDb = mDatabaseReference.child(userId);
 
                                 currentUserDb.child("username").setValue(name);
+                                currentUserDb.child("BMI").setValue(DetailsSignUpActivity.BMIString);
+                                currentUserDb.child("TDEE").setValue(DetailsSignUpActivity.BMRString);
+                                currentUserDb.child("Gender").setValue(DetailsSignUpActivity.gender);
+                                currentUserDb.child("Height").setValue(DetailsSignUpActivity.height);
+                                currentUserDb.child("Weight").setValue(DetailsSignUpActivity.weight);
+                                currentUserDb.child("Fullname").setValue(DetailsSignUpActivity.fullName);
+                                currentUserDb.child("Current Activity").setValue(DetailsSignUpActivity.currentActivity);
+                                currentUserDb.child("Weight Goal").setValue(DetailsSignUpActivity.weight);
+                                currentUserDb.child("Calorie Goal").setValue(DetailsSignUpActivity.calorieGoal);
+
 
                                 mProgressDialog.dismiss();
 
-                                Intent mainIntent = new Intent(SignUpActivity.this, WeightGoalsActivity.class);
+                                Intent mainIntent = new Intent(SignUpActivity.this, HomeScreen.class);
                                 startActivity(mainIntent);
 
                             }

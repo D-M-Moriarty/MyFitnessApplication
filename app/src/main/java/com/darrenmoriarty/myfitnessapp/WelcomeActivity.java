@@ -60,7 +60,7 @@ public class WelcomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                startActivity(new Intent(WelcomeActivity.this, SignUpActivity.class));
+                startActivity(new Intent(WelcomeActivity.this, SignUpChoice.class));
 
             }
         });

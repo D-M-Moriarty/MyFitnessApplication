@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp"
+    tools:context="com.darrenmoriarty.myfitnessapp.ActivateAccountActivity">
+
+    <TextView
+        android:id="@+id/BMRTextViewHead"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:text="BMR"
+        android:textSize="30sp"/>
+
+    <TextView
+        android:id="@+id/BMRTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/BMRTextViewHead"
+        android:layout_marginTop="23dp"
+        android:text="1234"
+        android:textSize="30sp"/>
+
+    <TextView
+        android:id="@+id/BMITextViewHead"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:text="BMI"
+        android:textSize="30sp"
+        android:layout_below="@+id/BMRTextView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:id="@+id/BMITextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/BMRTextView"
+        android:layout_alignRight="@+id/BMRTextView"
+        android:layout_below="@+id/BMITextViewHead"
+        android:layout_marginTop="31dp"
+        android:text="1234"
+        android:textAlignment="viewStart"
+        android:textSize="30sp"/>
+
+    <TextView
+        android:id="@+id/TDEETextViewHead"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:text="TDEE"
+        android:textSize="30sp"
+        android:layout_below="@+id/BMITextView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:id="@+id/calorieGoalHead"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="75dp"
+        android:text="Calorie Goal"
+        android:textSize="30sp"
+        android:layout_below="@+id/TDEETextViewHead"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:id="@+id/calorieGoalTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/calorieGoalHead"
+        android:layout_marginTop="41dp"
+        android:text="1234"
+        android:textSize="30sp"/>
+
+    <Button
+        android:id="@+id/activateButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="34dp"
+        android:onClick="registerUserDetails"
+        android:text="Activate Account"/>
+
+    <TextView
+        android:id="@+id/TDEETextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="13dp"
+        android:text="1234"
+        android:textSize="30sp"
+        android:layout_below="@+id/TDEETextViewHead"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+</RelativeLayout>

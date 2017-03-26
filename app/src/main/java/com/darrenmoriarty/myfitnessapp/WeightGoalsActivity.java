@@ -1,5 +1,7 @@
 package com.darrenmoriarty.myfitnessapp;
 
+import android.content.Intent;
+import android.support.annotation.IdRes;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -12,7 +14,16 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import static com.darrenmoriarty.myfitnessapp.R.id.gainWeightRadioButton;
+import static com.darrenmoriarty.myfitnessapp.R.id.hardExerciseRadioButton;
+import static com.darrenmoriarty.myfitnessapp.R.id.icon;
+import static com.darrenmoriarty.myfitnessapp.R.id.lightExerciseRadioButton;
+import static com.darrenmoriarty.myfitnessapp.R.id.loseWeightRadioButton;
+import static com.darrenmoriarty.myfitnessapp.R.id.maintainWeightRadioButton;
+import static com.darrenmoriarty.myfitnessapp.R.id.moderateExerciseRadioButton;
 import static com.darrenmoriarty.myfitnessapp.R.id.radio;
+import static com.darrenmoriarty.myfitnessapp.R.id.sedentaryRadioButton;
+import static com.darrenmoriarty.myfitnessapp.R.id.veryHardExerciseRadioButton;
 
 public class WeightGoalsActivity extends AppCompatActivity {
 
@@ -24,19 +35,14 @@ public class WeightGoalsActivity extends AppCompatActivity {
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mDatabaseReference;
 
-    // UI elements
-    private RadioButton mLoseWeight;
-    private RadioButton mMaintainWeight;
-    private RadioButton mGainWeight;
-    private RadioButton mSedentary;
-    private RadioButton mLightEx;
-    private RadioButton mModerateEx;
-    private RadioButton mHardEx;
-    private RadioButton mVeryHardEx;
 
     // Goal settings
     private String weightGoal;
     private String currentActivity;
+
+    // Radio Groups
+    RadioGroup weightGroup;
+    RadioGroup activityGroup;
 
     private Button mContinue;
 
@@ -45,97 +51,91 @@ public class WeightGoalsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weight_goals);
 
+        setTitle("Weight Goals Activity");
+
         mAuth = FirebaseAuth.getInstance();
         // Write a message to the database
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mDatabaseReference = mFirebaseDatabase.getReference().child("Users");
 
-        mLoseWeight = (RadioButton) findViewById(R.id.loseWeightRadioButton);
-        mMaintainWeight = (RadioButton) findViewById(R.id.maintainWeightRadioButton);
-        mGainWeight = (RadioButton) findViewById(R.id.gainWeightRadioButton);
-        mSedentary = (RadioButton) findViewById(R.id.sedentaryRadioButton);
-        mLightEx = (RadioButton) findViewById(R.id.lightExerciseRadioButton);
-        mModerateEx = (RadioButton) findViewById(R.id.moderateExerciseRadioButton);
-        mHardEx = (RadioButton) findViewById(R.id.hardExerciseRadioButton);
-        mVeryHardEx = (RadioButton) findViewById(R.id.veryHardExerciseRadioButton);
+        // Radio Groups
+        weightGroup = (RadioGroup) findViewById(R.id.weightRadioGroup);
+        activityGroup = (RadioGroup) findViewById(R.id.activityRadioGroup);
 
-        final RadioGroup weightGroup = (RadioGroup) findViewById(R.id.weightRadioGroup);
-        weightGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
-        {
+        // Checked Lister
+        weightGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                // checkedId is the RadioButton selected
+            public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
 
-                View radioButton = weightGroup.findViewById(checkedId);
-                int index = weightGroup.indexOfChild(radioButton);
+                if (checkedId == loseWeightRadioButton) {
 
-                // Add logic here
+                    weightGoal = "Lose Weight";
+                    System.out.println(weightGoal);
 
-                switch (index) {
-                    case 0: // first button
+                } else if (checkedId == maintainWeightRadioButton) {
 
-                        Toast.makeText(getApplicationContext(), "Selected button number " + index, Toast.LENGTH_LONG).show();
-                        weightGoal = "Lose Weight";
-                        break;
-                    case 1: // secondbutton
+                    weightGoal = "Maintain Weight";
+                    System.out.println(weightGoal);
 
-                        Toast.makeText(getApplicationContext(), "Selected button number " + index, Toast.LENGTH_LONG).show();
-                        weightGoal = "Maintain Weight";
-                        break;
-                    case 2: // thirdbutton
+                } else if (checkedId == gainWeightRadioButton) {
 
-                        Toast.makeText(getApplicationContext(), "Selected button number " + index, Toast.LENGTH_LONG).show();
-                        weightGoal = "Gain Weight";
-                        break;
+                    weightGoal = "Gain Weight";
+                    System.out.println(weightGoal);
+
                 }
+
 
             }
         });
 
-        final RadioGroup activityGroup = (RadioGroup) findViewById(R.id.activityRadioGroup);
-        activityGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
-        {
+        activityGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                // checkedId is the RadioButton selected
+            public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
 
-                View radioButton = activityGroup.findViewById(checkedId);
-                int index = activityGroup.indexOfChild(radioButton);
+                if (checkedId == sedentaryRadioButton) {
 
-                // Add logic here
+                    currentActivity = "Sedentary";
+                    System.out.println(currentActivity);
 
-                switch (index) {
-                    case 0: // first button
+                } else if (checkedId == lightExerciseRadioButton) {
 
-                        currentActivity = "Sedentary";
-                        break;
-                    case 1: // secondbutton
+                    currentActivity = "Light Exercise";
+                    System.out.println(currentActivity);
 
-                        currentActivity = "Light Exercise";
-                        break;
-                    case 2: // thirdbutton
-
-                        currentActivity = "Moderate Exercise";
-                        break;
-                    case 3:
-
-                        currentActivity = "Hard Exercise";
-                        break;
-                    case 4:
+                } else if (checkedId == moderateExerciseRadioButton) {
 
 
-                        currentActivity = "Very Moderate Exercise";
-                        break;
+                    currentActivity = "Moderate Exercise";
+                    System.out.println(currentActivity);
 
+                } else if (checkedId == hardExerciseRadioButton) {
+
+                    currentActivity = "Hard Exercise";
+                    System.out.println(currentActivity);
+
+                } else if (checkedId == veryHardExerciseRadioButton) {
+
+                    currentActivity = "Very Moderate Exercise";
+                    System.out.println(currentActivity);
 
                 }
-
             }
-        });
 
+        });
 
     }
 
 
 
+
+    public void toDetailsScreen(View view) {
+
+        Intent nextScreen = new Intent(WeightGoalsActivity.this, DetailsSignUpActivity.class);
+
+
+        nextScreen.putExtra("WeightGoal", weightGoal);
+        nextScreen.putExtra("CurrentActivity", currentActivity);
+
+        startActivity(nextScreen);
+    }
 }
