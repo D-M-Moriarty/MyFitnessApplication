@@ -117,7 +117,7 @@ public class SignUpActivity extends AppCompatActivity {
 
                                 mProgressDialog.dismiss();
 
-                                Intent mainIntent = new Intent(SignUpActivity.this, HomeScreen.class);
+                                Intent mainIntent = new Intent(SignUpActivity.this, WeightGoalsActivity.class);
                                 startActivity(mainIntent);
 
                             }

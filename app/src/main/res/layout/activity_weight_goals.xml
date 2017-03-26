@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp"
+    tools:context="com.darrenmoriarty.myfitnessapp.WeightGoalsActivity">
+
+    <RadioGroup
+        android:id="@+id/weightRadioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        >
+
+        <TextView
+            android:id="@+id/weightGoalTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Weight Goals"/>
+
+        <RadioButton
+            android:id="@+id/loseWeightRadioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Lose Weight"/>
+
+        <RadioButton
+            android:id="@+id/maintainWeightRadioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Maintain Weight"/>
+
+        <RadioButton
+            android:id="@+id/gainWeightRadioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Gain Weight"/>
+    </RadioGroup>
+
+    <RadioGroup
+        android:id="@+id/activityRadioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.635"
+        tools:layout_constraintBottom_creator="1"
+        tools:layout_constraintTop_creator="1">
+
+        <TextView
+            android:id="@+id/currentActivityTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Current Activity Level"/>
+
+        <RadioButton
+            android:id="@+id/sedentaryRadioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Sedentary"/>
+
+        <TextView
+            android:id="@+id/sedentaryDescTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Little or no exercise"
+            android:layout_gravity="right"
+            android:textSize="10sp"/>
+
+        <RadioButton
+            android:id="@+id/lightExerciseRadioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Light Exercise"/>
+
+        <TextView
+            android:id="@+id/lightDescTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Little or no exercise"
+            android:layout_gravity="right"
+            android:textSize="10sp"
+            tools:text="Exercise 1 - 3x times per week"/>
+
+        <RadioButton
+            android:id="@+id/moderateExerciseRadioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Moderate Exercise"/>
+
+        <TextView
+            android:id="@+id/moderateDescTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Exercise 3 - 5x times per week"
+            android:layout_gravity="right"
+            android:textSize="10sp"/>
+
+        <RadioButton
+            android:id="@+id/hardExerciseRadioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Hard Exercise"/>
+
+        <TextView
+            android:id="@+id/hardDescTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Exercise 6 - 7x times per week"
+            android:layout_gravity="right"
+            android:textSize="10sp"/>
+
+        <RadioButton
+            android:id="@+id/veryHardExerciseRadioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Very Hard Exercise"/>
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Exercise 2x a day"
+            android:layout_gravity="right"
+            android:textSize="10sp"/>
+
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/continueButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Continue"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_constraintLeft_creator="1"
+        android:layout_marginBottom="17dp"/>
+
+</android.support.constraint.ConstraintLayout>
