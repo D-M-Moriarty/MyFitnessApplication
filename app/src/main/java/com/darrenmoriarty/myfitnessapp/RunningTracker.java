@@ -8,11 +8,16 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
+import android.os.SystemClock;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Chronometer;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -27,8 +32,13 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
+import org.w3c.dom.Text;
+
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import static android.R.attr.rotation;
 
@@ -38,6 +48,24 @@ public class RunningTracker extends FragmentActivity implements OnMapReadyCallba
 
     private LocationManager mLocationManager;
     private LocationListener mLocationListener;
+
+    // GUI elements
+    private TextView durationText;
+    private TextView distanceText;
+    private Button startDurationTimerBtn;
+    private Chronometer mChronometer;
+    private TextView distanceValueText;
+
+    // Timer attributes
+    private Timer timer;
+    private int incrementValue = 1;
+
+    // boolean to start drawing the polylines
+    private boolean isDrawing = false;
+
+    //distance
+    private double distance = 0;
+    private String distString;
 
     // Array list for storing the LatLngs and plotting the polylines
     private ArrayList<LatLng> points;
@@ -49,6 +77,42 @@ public class RunningTracker extends FragmentActivity implements OnMapReadyCallba
         setContentView(R.layout.activity_running_tracker);
 
         points = new ArrayList<LatLng>(); //added
+
+        durationText = (TextView) findViewById(R.id.durationTextView);
+        distanceText = (TextView) findViewById(R.id.distanceTextView);
+        startDurationTimerBtn = (Button) findViewById(R.id.startWorkoutButton);
+        mChronometer = (Chronometer) findViewById(R.id.chronometerTimer);
+        distanceValueText = (TextView) findViewById(R.id.distanceValueTextView);
+
+
+        // setting the value of the chronometer
+        mChronometer.setBase(SystemClock.elapsedRealtime());
+
+        startDurationTimerBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                if (!isDrawing) {
+
+                    mChronometer.start();
+
+                    //trackDuration();
+                    startDurationTimerBtn.setText("Pause Workout");
+
+                    isDrawing = true;
+
+                } else {
+
+                    isDrawing = false;
+                    mChronometer.stop();
+                    startDurationTimerBtn.setText("Resume Workout");
+
+                }
+
+
+            }
+        });
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -72,6 +136,23 @@ public class RunningTracker extends FragmentActivity implements OnMapReadyCallba
         }
 
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 17));
+
+    }
+
+
+
+    // A stopwatch to track users exercise duration
+    public void trackDuration() {
+
+        timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                incrementValue++;
+                durationText.setText(Integer.toString(incrementValue) + "");
+            }
+        }, 0 , 1000);
+
 
     }
 
@@ -145,7 +226,7 @@ public class RunningTracker extends FragmentActivity implements OnMapReadyCallba
                 // Add a marker in Sydney and move the camera
                 LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
 
-                points.add(userLocation); //added
+
 
 
                 // clearing the map
@@ -159,9 +240,32 @@ public class RunningTracker extends FragmentActivity implements OnMapReadyCallba
 //                        .strokeColor(Color.rgb(201, 239, 246))
 //                        .fillColor(Color.argb(100, 201, 239, 246)));
 
+                // checking if workout has started
+                if (isDrawing) {
+
+                    // add new points to the arraylist while tracking
+                    points.add(userLocation);
+
+                    // if there are more than 2 points start calculating the distance travelled
+                    if (points.size() > 1)  {
+
+                        distance += CalculationByDistance(points.get(points.size() - 2), points.get(points.size() - 1));
+
+                        System.out.println(String.format("%.2f",distance));
+
+                        //distString = String.format("%.2f",Double.toString(distance));
+
+                        distanceValueText.setText(String.format(Locale.UK, "%.2f", distance));
+
+                    }
+
+                }
+
+                // always redraw the line
                 redrawLine();
 
-                System.out.println((int) CalculationByDistance(points.get(0), userLocation));
+
+                //System.out.println((int) CalculationByDistance(points.get(0), userLocation));
 
                 //Toast.makeText(RunningTracker.this, (int) CalculationByDistance(points.get(0), userLocation), Toast.LENGTH_SHORT).show();
 
@@ -208,10 +312,6 @@ public class RunningTracker extends FragmentActivity implements OnMapReadyCallba
             }
         }
 
-        // Add a marker in Sydney and move the camera
-//        LatLng sydney = new LatLng(-34, 151);
-//        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-//        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
     }
 
     private void redrawLine(){
@@ -225,4 +325,5 @@ public class RunningTracker extends FragmentActivity implements OnMapReadyCallba
         }
         line = mMap.addPolyline(options); //add Polyline
     }
+
 }

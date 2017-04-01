@@ -50,11 +50,6 @@
             android:value="@string/google_maps_key"/>
 
         <activity
-            android:name=".RunTracker"
-            android:label="@string/title_activity_run_tracker">
-
-        </activity>
-        <activity
             android:name=".RunningTracker"
             android:label="@string/title_activity_running_tracker">
             <intent-filter>
