@@ -77,6 +77,7 @@ public class RunningTracker extends FragmentActivity implements OnMapReadyCallba
 
     // calculating the distance travelled
     //http://stackoverflow.com/questions/14394366/find-distance-between-two-points-on-map-using-google-map-api-v2
+    // calculate the distance between each update and add to arraylist
     public double CalculationByDistance(LatLng StartP, LatLng EndP) {
         int Radius = 6371;// radius of earth in Km
         double lat1 = StartP.latitude;
@@ -96,8 +97,8 @@ public class RunningTracker extends FragmentActivity implements OnMapReadyCallba
         int kmInDec = Integer.valueOf(newFormat.format(km));
         double meter = valueResult % 1000;
         int meterInDec = Integer.valueOf(newFormat.format(meter));
-        Log.i("Radius Value", "" + valueResult + "   KM  " + kmInDec
-                + " Meter   " + meterInDec);
+//        Log.i("Radius Value", "" + valueResult + "   KM  " + kmInDec
+//                + " Meter   " + meterInDec);
 
         return Radius * c;
     }
@@ -124,7 +125,18 @@ public class RunningTracker extends FragmentActivity implements OnMapReadyCallba
 
         Location lastKnownLocation = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
-        centerMapOnLocation(lastKnownLocation, "Your location");
+        if(lastKnownLocation != null) {
+
+            LatLng userLocation = new LatLng(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
+
+            mMap.clear();
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(userLocation));
+
+            centerMapOnLocation(lastKnownLocation, "Your location");
+
+        }
+
+
 
         mLocationListener = new LocationListener() {
             @Override
