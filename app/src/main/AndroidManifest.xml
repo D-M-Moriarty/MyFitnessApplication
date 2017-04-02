@@ -52,7 +52,6 @@
         <activity
             android:name=".RunningTracker"
             android:label="@string/title_activity_running_tracker">
-
         </activity>
         <activity
             android:name=".pageractivities.MainHomePagerActivity"
@@ -63,6 +62,11 @@
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".NavigationDrawerActivity"
+            android:label="@string/title_activity_navigation_drawer"
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
     </application>
 

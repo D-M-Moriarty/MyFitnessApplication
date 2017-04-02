@@ -84,6 +84,8 @@ public class RunningTracker extends FragmentActivity implements OnMapReadyCallba
         mChronometer = (Chronometer) findViewById(R.id.chronometerTimer);
         distanceValueText = (TextView) findViewById(R.id.distanceValueTextView);
 
+        distanceValueText.setText("0.00 m");
+
 
         // setting the value of the chronometer
         mChronometer.setBase(SystemClock.elapsedRealtime());
@@ -181,7 +183,7 @@ public class RunningTracker extends FragmentActivity implements OnMapReadyCallba
 //        Log.i("Radius Value", "" + valueResult + "   KM  " + kmInDec
 //                + " Meter   " + meterInDec);
 
-        return Radius * c;
+        return km;
     }
 
 
@@ -255,7 +257,7 @@ public class RunningTracker extends FragmentActivity implements OnMapReadyCallba
 
                         //distString = String.format("%.2f",Double.toString(distance));
 
-                        distanceValueText.setText(String.format(Locale.UK, "%.2f", distance));
+                        distanceValueText.setText(String.format(Locale.UK, "%.2f m", distance));
 
                     }
 
