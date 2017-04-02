@@ -1,16 +1,16 @@
-package com.darrenmoriarty.myfitnessapp;
+package com.darrenmoriarty.myfitnessapp.Login_Signup_activities;
 
 import android.content.Intent;
 import android.support.annotation.IdRes;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.SoundEffectConstants;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+
+import com.darrenmoriarty.myfitnessapp.R;
 
 import static com.darrenmoriarty.myfitnessapp.R.id.femaleRadioButton;
 import static com.darrenmoriarty.myfitnessapp.R.id.maleRadioButton;

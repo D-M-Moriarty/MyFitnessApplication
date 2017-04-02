@@ -21,21 +21,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".WelcomeActivity">
+        <activity android:name=".Login_Signup_activities.WelcomeActivity">
         </activity>
-        <activity android:name=".SignUpActivity">
+        <activity android:name=".Login_Signup_activities.SignUpActivity">
         </activity>
-        <activity android:name=".LoginActivity">
+        <activity android:name=".Login_Signup_activities.LoginActivity">
         </activity>
         <activity android:name=".HomeScreen">
         </activity>
-        <activity android:name=".WeightGoalsActivity">
+        <activity android:name=".Login_Signup_activities.WeightGoalsActivity">
         </activity>
-        <activity android:name=".DetailsSignUpActivity">
+        <activity android:name=".Login_Signup_activities.DetailsSignUpActivity">
         </activity>
-        <activity android:name=".ActivateAccountActivity">
+        <activity android:name=".Login_Signup_activities.ActivateAccountActivity">
         </activity>
-        <activity android:name=".SignUpChoice">
+        <activity android:name=".Login_Signup_activities.SignUpChoice">
         </activity>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -52,6 +52,12 @@
         <activity
             android:name=".RunningTracker"
             android:label="@string/title_activity_running_tracker">
+
+        </activity>
+        <activity
+            android:name=".pageractivities.MainHomePagerActivity"
+            android:label="@string/title_activity_main_home_pager"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

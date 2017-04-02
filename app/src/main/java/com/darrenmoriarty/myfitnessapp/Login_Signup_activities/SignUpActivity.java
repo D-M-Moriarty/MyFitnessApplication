@@ -1,4 +1,4 @@
-package com.darrenmoriarty.myfitnessapp;
+package com.darrenmoriarty.myfitnessapp.Login_Signup_activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.darrenmoriarty.myfitnessapp.HomeScreen;
+import com.darrenmoriarty.myfitnessapp.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;

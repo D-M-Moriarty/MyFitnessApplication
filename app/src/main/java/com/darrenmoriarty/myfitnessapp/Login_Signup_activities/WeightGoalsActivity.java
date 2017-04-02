@@ -1,4 +1,4 @@
-package com.darrenmoriarty.myfitnessapp;
+package com.darrenmoriarty.myfitnessapp.Login_Signup_activities;
 
 import android.content.Intent;
 import android.support.annotation.IdRes;
@@ -6,22 +6,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Toast;
 
+import com.darrenmoriarty.myfitnessapp.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import static com.darrenmoriarty.myfitnessapp.R.id.gainWeightRadioButton;
 import static com.darrenmoriarty.myfitnessapp.R.id.hardExerciseRadioButton;
-import static com.darrenmoriarty.myfitnessapp.R.id.icon;
 import static com.darrenmoriarty.myfitnessapp.R.id.lightExerciseRadioButton;
 import static com.darrenmoriarty.myfitnessapp.R.id.loseWeightRadioButton;
 import static com.darrenmoriarty.myfitnessapp.R.id.maintainWeightRadioButton;
 import static com.darrenmoriarty.myfitnessapp.R.id.moderateExerciseRadioButton;
-import static com.darrenmoriarty.myfitnessapp.R.id.radio;
 import static com.darrenmoriarty.myfitnessapp.R.id.sedentaryRadioButton;
 import static com.darrenmoriarty.myfitnessapp.R.id.veryHardExerciseRadioButton;
 

@@ -1,9 +1,11 @@
-package com.darrenmoriarty.myfitnessapp;
+package com.darrenmoriarty.myfitnessapp.Login_Signup_activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+
+import com.darrenmoriarty.myfitnessapp.R;
 
 public class SignUpChoice extends AppCompatActivity {
 

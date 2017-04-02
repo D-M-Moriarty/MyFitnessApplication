@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="20dp"
-    tools:context="com.darrenmoriarty.myfitnessapp.ActivateAccountActivity">
+    tools:context="com.darrenmoriarty.myfitnessapp.Login_Signup_activities.ActivateAccountActivity">
 
     <TextView
         android:id="@+id/BMRTextViewHead"
@@ -50,6 +50,7 @@
         android:layout_marginTop="31dp"
         android:text="1234"
         android:textAlignment="viewStart"
+        android:layout_gravity="start"
         android:textSize="30sp"/>
 
     <TextView
