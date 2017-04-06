@@ -1,4 +1,4 @@
-package com.darrenmoriarty.myfitnessapp.pageractivities;
+package com.darrenmoriarty.myfitnessapp.pageractivities.diet_package;
 
 /**
  * Created by Darren Moriarty on 28/03/2017.

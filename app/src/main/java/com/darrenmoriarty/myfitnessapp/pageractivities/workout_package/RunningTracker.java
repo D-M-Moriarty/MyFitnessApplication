@@ -1,6 +1,7 @@
-package com.darrenmoriarty.myfitnessapp;
+package com.darrenmoriarty.myfitnessapp.pageractivities.workout_package;
 
 import android.*;
+import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -20,6 +21,8 @@ import android.widget.Chronometer;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.darrenmoriarty.myfitnessapp.*;
+import com.darrenmoriarty.myfitnessapp.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -41,6 +44,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import static android.R.attr.rotation;
+import static android.R.attr.start;
+import static android.R.attr.streamType;
 
 public class RunningTracker extends FragmentActivity implements OnMapReadyCallback {
 
@@ -59,6 +64,8 @@ public class RunningTracker extends FragmentActivity implements OnMapReadyCallba
     // Timer attributes
     private Timer timer;
     private int incrementValue = 1;
+    private boolean timerStarted = false;
+    private long timeWhenStopped = 0;
 
     // boolean to start drawing the polylines
     private boolean isDrawing = false;
@@ -74,7 +81,7 @@ public class RunningTracker extends FragmentActivity implements OnMapReadyCallba
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_running_tracker);
+        setContentView(com.darrenmoriarty.myfitnessapp.R.layout.activity_running_tracker);
 
         points = new ArrayList<LatLng>(); //added
 
@@ -87,16 +94,26 @@ public class RunningTracker extends FragmentActivity implements OnMapReadyCallba
         distanceValueText.setText("0.00 m");
 
 
-        // setting the value of the chronometer
-        mChronometer.setBase(SystemClock.elapsedRealtime());
-
         startDurationTimerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
 
+                // only sets the basetime when the button is pressed but not for any other click
+                if (!timerStarted) {
+
+                    // setting the value of the chronometer
+                    mChronometer.setBase(SystemClock.elapsedRealtime());
+
+                    timerStarted = true;
+
+                }
+
+                System.out.println("Drwaing " + isDrawing);
+
                 if (!isDrawing) {
 
+                    mChronometer.setBase(SystemClock.elapsedRealtime() + timeWhenStopped);
                     mChronometer.start();
 
                     //trackDuration();
@@ -107,12 +124,40 @@ public class RunningTracker extends FragmentActivity implements OnMapReadyCallba
                 } else {
 
                     isDrawing = false;
+                    timeWhenStopped = mChronometer.getBase() - SystemClock.elapsedRealtime();
                     mChronometer.stop();
-                    startDurationTimerBtn.setText("Resume Workout");
+                    startDurationTimerBtn.setText("click to resume : hold to finish");
 
                 }
 
 
+            }
+        });
+
+        startDurationTimerBtn.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+
+                // TODO reset all the attributes
+                // TODO save the users data for the activity
+                // TODO give the option to save the details
+
+                isDrawing = false;
+                mChronometer.setBase(SystemClock.elapsedRealtime());
+                timeWhenStopped = 0;
+                mChronometer.stop();
+                mChronometer.setText("00:00");
+
+                distanceValueText.setText("0.00 m");
+
+                points.clear();
+
+
+                startDurationTimerBtn.setText("start workout");
+
+
+
+                return true;
             }
         });
 
@@ -128,14 +173,6 @@ public class RunningTracker extends FragmentActivity implements OnMapReadyCallba
         LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
 
         mMap.clear();
-
-        if (title != "Your location") {
-
-            //mMap.addMarker(new MarkerOptions().position(userLocation).title(title).anchor(0.5f,0.5f)
-                    //.flat(true)).setRotation(rotation);
-
-
-        }
 
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 17));
 
@@ -229,13 +266,6 @@ public class RunningTracker extends FragmentActivity implements OnMapReadyCallba
                 LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
 
 
-
-
-                // clearing the map
-                mMap.clear();
-               // mMap.addMarker(new MarkerOptions().position(userLocation).title("Your Location")).setRotation(rotation);
-                mMap.moveCamera(CameraUpdateFactory.newLatLng(userLocation));
-
 //                Circle circle = mMap.addCircle(new CircleOptions()
 //                        .center(userLocation)
 //                        .radius(10)
@@ -244,6 +274,12 @@ public class RunningTracker extends FragmentActivity implements OnMapReadyCallba
 
                 // checking if workout has started
                 if (isDrawing) {
+
+                    // TODO make sure the camera isn't following the user while not drawing
+                    // clearing the map
+                    mMap.clear();
+                    // mMap.addMarker(new MarkerOptions().position(userLocation).title("Your Location")).setRotation(rotation);
+                    mMap.moveCamera(CameraUpdateFactory.newLatLng(userLocation));
 
                     // add new points to the arraylist while tracking
                     points.add(userLocation);
@@ -329,3 +365,5 @@ public class RunningTracker extends FragmentActivity implements OnMapReadyCallba
     }
 
 }
+
+

@@ -1,7 +1,6 @@
 package com.darrenmoriarty.myfitnessapp.pageractivities;
 
 import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -24,7 +23,11 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.darrenmoriarty.myfitnessapp.R;
-import com.darrenmoriarty.myfitnessapp.RunningTracker;
+import com.darrenmoriarty.myfitnessapp.pageractivities.diet_package.DietTab;
+import com.darrenmoriarty.myfitnessapp.pageractivities.goals_package.GoalsTab;
+import com.darrenmoriarty.myfitnessapp.pageractivities.workout_package.RunningTracker;
+import com.darrenmoriarty.myfitnessapp.pageractivities.workout_package.TabataSettingActivity;
+import com.darrenmoriarty.myfitnessapp.pageractivities.workout_package.WorkoutsTab;
 
 public class MainHomePagerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -44,6 +47,7 @@ public class MainHomePagerActivity extends AppCompatActivity
      */
     private ViewPager mViewPager;
     private Button startTracking;
+    private Button startTabataTimer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +91,15 @@ public class MainHomePagerActivity extends AppCompatActivity
         // find the button to start tracking the run
         startTracking = (Button) findViewById(R.id.startRunTrackBtn);
 
+        startTabataTimer = (Button) findViewById(R.id.tabataTimerBtn);
+
+
+    }
+
+    // starting the tabata timer activity
+    public void tabataTimerClick(View view) {
+
+        startActivity(new Intent(MainHomePagerActivity.this, TabataSettingActivity.class));
 
     }
 

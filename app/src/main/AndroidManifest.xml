@@ -50,23 +50,27 @@
             android:value="@string/google_maps_key"/>
 
         <activity
-            android:name=".RunningTracker"
+            android:name=".pageractivities.workout_package.RunningTracker"
             android:label="@string/title_activity_running_tracker">
         </activity>
         <activity
             android:name=".pageractivities.MainHomePagerActivity"
             android:label="@string/title_activity_main_home_pager"
             android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".NavigationDrawerActivity"
+            android:label="@string/title_activity_navigation_drawer"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity android:name=".pageractivities.workout_package.TabataSettingActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity
-            android:name=".NavigationDrawerActivity"
-            android:label="@string/title_activity_navigation_drawer"
-            android:theme="@style/AppTheme.NoActionBar">
+        <activity android:name=".pageractivities.workout_package.TabataMainActivity">
         </activity>
     </application>
 
