@@ -1,21 +1,20 @@
 package com.darrenmoriarty.myfitnessapp.pageractivities.workout_package;
 
-import android.content.DialogInterface;
+import android.media.MediaPlayer;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.darrenmoriarty.myfitnessapp.R;
 
 import java.util.concurrent.TimeUnit;
 
-public class TabataMainActivity extends AppCompatActivity implements View.OnClickListener{
+public class TabataMainActivity extends AppCompatActivity implements View.OnClickListener {
 
 
     private long timeCountInMilliSeconds = 1 * 60000;
@@ -29,14 +28,32 @@ public class TabataMainActivity extends AppCompatActivity implements View.OnClic
     private int intWorkVal;
     private int intRestVal;
     private int intCyclesVal;
+    private int currentCycleValue = 1;
+
+    private String currentActivity;
+    private int currentActivityCounter;
+
+    private boolean counterActive = true;
+    private int tickCount = 0;
 
     private TimerStatus timerStatus = TimerStatus.STOPPED;
 
+    // click sound
+    MediaPlayer click;
+    MediaPlayer airhorn;
+
+    // GUI elements
     private ProgressBar progressBarCircle;
-    private TextView textViewTime;
+    private TextView timerTextView;
     private ImageView imageViewReset;
-    private ImageView imageViewStartStop;
+    private ImageView imageViewPause;
     private CountDownTimer countDownTimer;
+    private TextView currentActivityTextView;
+    private ImageView activityImageView;
+    private TextView cyclesTextView;
+    private ImageView imageViewStart;
+    private ImageView goBackImageView;
+    private ImageView skipForwardImageView;
 
 
     @Override
@@ -50,150 +67,279 @@ public class TabataMainActivity extends AppCompatActivity implements View.OnClic
         intRestVal = getIntent().getIntExtra("restValue", 0);
         intCyclesVal = getIntent().getIntExtra("cyclesValue", 0);
 
-        // method call to initialize the views
-        initViews();
-        // method call to initialize the listeners
-        initListeners();
-
-        //textViewTime.setText(Integer.toString(intWorkVal));
-
-        // TODO fix up this code !!!!
-
-
-    }
-
-    /**
-     * method to initialize the views
-     */
-    private void initViews() {
+        // GUI elements
         progressBarCircle = (ProgressBar) findViewById(R.id.progressBarCircle);
-        textViewTime = (TextView) findViewById(R.id.textViewTime);
+        timerTextView = (TextView) findViewById(R.id.textViewTime);
         imageViewReset = (ImageView) findViewById(R.id.imageViewReset);
-        imageViewStartStop = (ImageView) findViewById(R.id.imageViewStartStop);
+        imageViewStart = (ImageView) findViewById(R.id.imageViewStart);
+        imageViewPause = (ImageView) findViewById(R.id.imageViewPause);
+        currentActivityTextView = (TextView)findViewById(R.id.currentActivityTextView);
+        activityImageView = (ImageView) findViewById(R.id.activityImageView);
+        cyclesTextView = (TextView) findViewById(R.id.cyclesTextView);
+        goBackImageView = (ImageView) findViewById(R.id.goBackImageView);
+        skipForwardImageView = (ImageView) findViewById(R.id.skipForwardImageView);
+
+        // finding click sound
+        click = MediaPlayer.create(getApplicationContext(), R.raw.click);
+        // airhorn
+        airhorn = MediaPlayer.create(getApplicationContext(), R.raw.airhorn);
+
+
+        // Listeners
+        imageViewPause.setOnClickListener(this);
+        imageViewStart.setOnClickListener(this);
+        goBackImageView.setOnClickListener(this);
+        skipForwardImageView.setOnClickListener(this);
+
+        currentActivity = "prepare";
+        currentActivityCounter = intPrepareVal;
+
+        startTimer();
+
+        // TODO add sounds from device to play in the background during workout !!!!
+        // TODO figure out how to change the progress bar
+
+
     }
 
-    /**
-     * method to initialize the click listeners
-     */
-    private void initListeners() {
-        imageViewReset.setOnClickListener(this);
-        imageViewStartStop.setOnClickListener(this);
+    public void skipForward() {
+
+        countDownTimer.cancel();
+
+        // setting the activity state
+        if (currentActivity.equals("prepare")) {
+
+            currentActivity = "work";
+            setTimerValues(intWorkVal);
+            activityImageView.setImageResource(R.drawable.ic_fitness_center_black_24dp);
+
+        } else if (currentActivity.equals("work")) {
+
+            currentActivity = "rest";
+            setTimerValues(intRestVal);
+            activityImageView.setImageResource(R.drawable.ic_accessibility_black_24dp);
+
+        } else if (currentActivity.equals("rest")) {
+
+            // keeping track of the current cycle
+            if (currentCycleValue < intCyclesVal)
+                currentCycleValue++;
+
+            if (currentCycleValue <= intCyclesVal) {
+                currentActivity = "prepare";
+                setTimerValues(intPrepareVal);
+                activityImageView.setImageResource(R.drawable.ic_directions_run_black_24dp);
+            }
+
+
+        }
+
+        // keep starting the timer as long as there is cycles left
+        if (currentCycleValue <= intCyclesVal) {
+
+            cyclesTextView.setText(currentCycleValue + "/" + intCyclesVal);
+            startCountDownTimer();
+
+        } else {
+
+            imageViewPause.setVisibility(View.INVISIBLE);
+            imageViewStart.setVisibility(View.VISIBLE);
+
+        }
+
+        currentActivityTextView.setText(currentActivity);
+
     }
 
-    /**
-     * implemented method to listen clicks
-     *
-     * @param view
-     */
+    public void goBack() {
+
+        countDownTimer.cancel();
+
+        // setting the activity state
+        if (currentActivity.equals("rest")) {
+
+            currentActivity = "work";
+            setTimerValues(intWorkVal);
+            activityImageView.setImageResource(R.drawable.ic_fitness_center_black_24dp);
+
+        } else if (currentActivity.equals("work")) {
+
+            currentActivity = "prepare";
+            setTimerValues(intPrepareVal);
+            activityImageView.setImageResource(R.drawable.ic_directions_run_black_24dp);
+
+        } else if (currentActivity.equals("prepare")) {
+
+            // keeping track of the current cycle
+            if (currentCycleValue > 1) {
+
+                currentCycleValue--;
+
+                currentActivity = "rest";
+                setTimerValues(intRestVal);
+                activityImageView.setImageResource(R.drawable.ic_accessibility_black_24dp);
+
+            }
+
+
+        }
+
+        // keep starting the timer as long as there is cycles left
+        if (currentCycleValue > 0) {
+
+            cyclesTextView.setText(currentCycleValue + "/" + intCyclesVal);
+            startCountDownTimer();
+
+        } else {
+
+            startCountDownTimer();
+            imageViewPause.setVisibility(View.VISIBLE);
+            imageViewStart.setVisibility(View.INVISIBLE);
+
+        }
+
+        currentActivityTextView.setText(currentActivity);
+
+    }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.imageViewReset:
-                reset();
+            case R.id.imageViewStart:
+                startTimer();
                 break;
-            case R.id.imageViewStartStop:
-                startStop();
+            case R.id.imageViewPause:
+                pauseTimer();
+                break;
+            case R.id.skipForwardImageView:
+                skipForward();
+                break;
+            case R.id.goBackImageView:
+                goBack();
                 break;
         }
     }
 
-    /**
-     * method to reset count down timer
-     */
-    private void reset() {
-        stopCountDownTimer();
-        startCountDownTimer();
+    private void pauseTimer() {
+
+        counterActive = false;
+
+        // changing stop icon to start icon
+        imageViewPause.setVisibility(View.INVISIBLE);
+        imageViewStart.setVisibility(View.VISIBLE);
+        // changing the timer status to stopped
+        timerStatus = TimerStatus.STOPPED;
+        //System.out.println("Cancelling the timer");
+        countDownTimer.cancel();
+
     }
 
+    private void startTimer() {
 
-    /**
-     * method to start and stop count down timer
-     */
-    private void startStop() {
         if (timerStatus == TimerStatus.STOPPED) {
 
+            counterActive = true;
+            //System.out.println(counterActive + " Counter active");
+
             // call to initialize the timer values
-            setTimerValues();
+            setTimerValues(currentActivityCounter);
             // call to initialize the progress bar values
             setProgressBarValues();
-            // showing the reset icon
-            imageViewReset.setVisibility(View.VISIBLE);
-            // changing play icon to stop icon
-            imageViewStartStop.setImageResource(R.drawable.ic_pause_circle_outline_black_24dp);
+
+            imageViewPause.setVisibility(View.VISIBLE);
+            imageViewStart.setVisibility(View.INVISIBLE);
             // changing the timer status to started
             timerStatus = TimerStatus.STARTED;
             // call to start the count down timer
             startCountDownTimer();
 
-        } else {
-
-            // hiding the reset icon
-            imageViewReset.setVisibility(View.GONE);
-            // changing stop icon to start icon
-            imageViewStartStop.setImageResource(R.drawable.ic_play_circle_outline_black_24dp);
-            // changing the timer status to stopped
-            timerStatus = TimerStatus.STOPPED;
-            stopCountDownTimer();
-
         }
 
     }
 
+
     /**
      * method to initialize the values for count down timer
      */
-    private void setTimerValues() {
-        int time = intWorkVal;
-//        if (!editTextMinute.getText().toString().isEmpty()) {
-//            // fetching value from edit text and type cast to integer
-//            time = Integer.parseInt(editTextMinute.getText().toString().trim());
-//        } else {
-//            // toast message to fill edit text
-//            Toast.makeText(getApplicationContext(), "", Toast.LENGTH_LONG).show();
-//        }
-        // assigning values after converting to milliseconds
+    private void setTimerValues(int timeVal) {
+        int time = timeVal;
+        currentActivityCounter = time;
+
         timeCountInMilliSeconds = time * 10 * 100;
     }
 
-    /**
-     * method to start count down timer
-     */
+    //method to start count down timer
     private void startCountDownTimer() {
 
-        countDownTimer = new CountDownTimer(timeCountInMilliSeconds, 1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
+        if (counterActive) {
 
-                textViewTime.setText(hmsTimeFormatter(millisUntilFinished));
+            countDownTimer = new CountDownTimer(timeCountInMilliSeconds + 100, 1000) {
+                @Override
+                public void onTick(long millisUntilFinished) {
 
-                progressBarCircle.setProgress((int) (millisUntilFinished / 1000));
+                    // checking every second
+                    if ((int) (millisUntilFinished / 10) % 1 == 0) {
 
-            }
+                        tickCount++;
 
-            @Override
-            public void onFinish() {
+                        // if one tick has passed
+                        if (tickCount > 1) {
 
-                textViewTime.setText(hmsTimeFormatter(timeCountInMilliSeconds));
-                // call to initialize the progress bar values
-                setProgressBarValues();
-                // hiding the reset icon
-                imageViewReset.setVisibility(View.GONE);
-                // changing stop icon to start icon
-                imageViewStartStop.setImageResource(R.drawable.ic_play_arrow_black_24dp);
-                // changing the timer status to stopped
-                timerStatus = TimerStatus.STOPPED;
-            }
+                            // decrement the value of the work variable
+                            if ((int) (millisUntilFinished / 10) % 1 == 0)
+                                currentActivityCounter--;
 
-        }.start();
-        countDownTimer.start();
+                        }
+
+
+                    }
+
+
+                    timerTextView.setText(hmsTimeFormatter(millisUntilFinished));
+
+                    char lastDigit = timerTextView.getText().charAt(timerTextView.length() - 1);
+
+                    // playing the ticking sound from 3 seconds to 0
+                    if (lastDigit < '4' && lastDigit > '0') {
+
+                        // play click
+                        click.start();
+
+                    }
+
+                    progressBarCircle.setProgress((int) (millisUntilFinished / 1000));
+
+                }
+
+                @Override
+                public void onFinish() {
+
+                    timerTextView.setText(hmsTimeFormatter(timeCountInMilliSeconds));
+                    // call to initialize the progress bar values
+                    setProgressBarValues();
+                    // hiding the reset icon
+                    imageViewReset.setVisibility(View.GONE);
+
+                    // changing the timer status to stopped
+                    timerStatus = TimerStatus.STOPPED;
+
+                    timerTextView.setText("00:00:00");
+
+                    // play airhorn
+                    airhorn.start();
+
+                    // progress forward
+                    skipForward();
+
+                }
+
+            }.start();
+
+        }
+
+
     }
 
-    /**
-     * method to stop count down timer
-     */
-    private void stopCountDownTimer() {
-        countDownTimer.cancel();
-    }
 
     /**
      * method to set circular progress bar values
@@ -219,7 +365,6 @@ public class TabataMainActivity extends AppCompatActivity implements View.OnClic
                 TimeUnit.MILLISECONDS.toSeconds(milliSeconds) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(milliSeconds)));
 
         return hms;
-
 
     }
 
