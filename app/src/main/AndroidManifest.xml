@@ -57,6 +57,11 @@
             android:name=".pageractivities.MainHomePagerActivity"
             android:label="@string/title_activity_main_home_pager"
             android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
         <activity
             android:name=".NavigationDrawerActivity"
@@ -64,13 +69,15 @@
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity android:name=".pageractivities.workout_package.TabataSettingActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
         <activity android:name=".pageractivities.workout_package.TabataMainActivity">
+        </activity>
+        <activity
+            android:name=".pageractivities.diet_package.FoodSearchActivity"
+            android:label="@string/title_activity_food_search"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity android:name=".pageractivities.diet_package.AddFoodActivity">
         </activity>
     </application>
 

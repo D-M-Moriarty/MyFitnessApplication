@@ -121,15 +121,15 @@ public class TabataMainActivity extends AppCompatActivity implements View.OnClic
 
         } else if (currentActivity.equals("rest")) {
 
-            // keeping track of the current cycle
-            if (currentCycleValue < intCyclesVal)
-                currentCycleValue++;
-
             if (currentCycleValue <= intCyclesVal) {
                 currentActivity = "prepare";
                 setTimerValues(intPrepareVal);
                 activityImageView.setImageResource(R.drawable.ic_directions_run_black_24dp);
             }
+
+            // keeping track of the current cycle
+            if (currentCycleValue <= intCyclesVal)
+                currentCycleValue++;
 
 
         }
@@ -298,9 +298,10 @@ public class TabataMainActivity extends AppCompatActivity implements View.OnClic
                     timerTextView.setText(hmsTimeFormatter(millisUntilFinished));
 
                     char lastDigit = timerTextView.getText().charAt(timerTextView.length() - 1);
+                    char secondLastDigit = timerTextView.getText().charAt(timerTextView.length() - 2);
 
                     // playing the ticking sound from 3 seconds to 0
-                    if (lastDigit < '4' && lastDigit > '0') {
+                    if (lastDigit < '4' && lastDigit > '0' && secondLastDigit == '0') {
 
                         // play click
                         click.start();

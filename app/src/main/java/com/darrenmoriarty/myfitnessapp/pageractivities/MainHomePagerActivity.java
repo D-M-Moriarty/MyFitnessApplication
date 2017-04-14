@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.darrenmoriarty.myfitnessapp.R;
 import com.darrenmoriarty.myfitnessapp.pageractivities.diet_package.DietTab;
+import com.darrenmoriarty.myfitnessapp.pageractivities.diet_package.FoodSearchActivity;
 import com.darrenmoriarty.myfitnessapp.pageractivities.goals_package.GoalsTab;
 import com.darrenmoriarty.myfitnessapp.pageractivities.workout_package.RunningTracker;
 import com.darrenmoriarty.myfitnessapp.pageractivities.workout_package.TabataSettingActivity;
@@ -94,6 +95,12 @@ public class MainHomePagerActivity extends AppCompatActivity
         startTabataTimer = (Button) findViewById(R.id.tabataTimerBtn);
 
 
+    }
+
+    // log food click
+    public void logFood(View view) {
+
+        startActivity(new Intent(MainHomePagerActivity.this, FoodSearchActivity.class));
     }
 
     // starting the tabata timer activity

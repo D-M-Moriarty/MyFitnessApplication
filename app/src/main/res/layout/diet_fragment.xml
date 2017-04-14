@@ -16,19 +16,16 @@
                       android:layout_width="match_parent"
                       android:layout_height="match_parent"
                       android:orientation="vertical"
+                      android:padding="0dp"
                       android:paddingBottom="@dimen/activity_vertical_margin"
                       android:paddingLeft="@dimen/activity_horizontal_margin"
                       android:paddingRight="@dimen/activity_horizontal_margin"
                       android:paddingTop="@dimen/activity_vertical_margin"
+                      android:weightSum="1"
                       tools:context="com.darrenmoriarty.myfitnessapp.pageractivities.MainHomePagerActivity">
 
-            <TextView
-                android:id="@+id/section_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Diet Tab"/>
-
             <android.support.v7.widget.CardView
+                android:id="@+id/runTrackCardView"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_marginLeft="10dp"
@@ -39,30 +36,39 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 tools:layout_constraintLeft_creator="1"
-                tools:layout_constraintRight_creator="1"
-                android:id="@+id/runTrackCardView">
+                tools:layout_constraintRight_creator="1">
 
 
                 <Button
-                    android:id="@+id/startRunTrackBtn"
+                    android:id="@+id/logFoodButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:onClick="startTracking"
-                    android:text="Track Run"/>
+                    android:onClick="logFood"
+                    android:text="Log Food"/>
+
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:fitsSystemWindows="false"
+                    android:onClick="Track Run"
+                    app:srcCompat="@drawable/running"/>
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
                 android:id="@+id/tabataCardView"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:layout_alignLeft="@+id/runTrackCardView"
-                android:layout_alignStart="@+id/runTrackCardView"
-                android:layout_below="@+id/runTrackCardView"
-                android:layout_marginLeft="0dp"
+                android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="18dp"
                 app:cardCornerRadius="4dp"
-                app:cardElevation="4dp">
+                app:cardElevation="4dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                tools:layout_constraintLeft_creator="1"
+                tools:layout_constraintRight_creator="1">
 
                 <Button
                     android:id="@+id/tabataTimerBtn"
@@ -75,10 +81,45 @@
                 android:id="@+id/workoutsCardView"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
+                android:layout_marginBottom="0dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:layout_marginTop="18dp"
-                android:layout_below="@+id/tabataCardView"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"/>
+                app:cardCornerRadius="4dp"
+                app:cardElevation="4dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                tools:layout_constraintLeft_creator="1"
+                tools:layout_constraintRight_creator="1">
+
+                <Button
+                    android:id="@+id/viewWorkoutsBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="View Workouts"/>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/VO2MaxCardView"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginBottom="18dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="18dp"
+                app:cardCornerRadius="4dp"
+                app:cardElevation="4dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                tools:layout_constraintLeft_creator="1"
+                tools:layout_constraintRight_creator="1">
+
+                <Button
+                    android:id="@+id/VO2MaxBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="View VO2 Max"/>
+            </android.support.v7.widget.CardView>
 
         </LinearLayout>
 </android.support.v4.widget.NestedScrollView>
