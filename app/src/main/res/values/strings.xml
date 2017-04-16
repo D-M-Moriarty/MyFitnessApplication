@@ -36,4 +36,6 @@
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="title_activity_navigation_drawer">NavigationDrawerActivity</string>
     <string name="title_activity_food_search">FoodSearchActivity</string>
+    <string name="_0_ft_0_in">0 ft, 0 in</string>
+    <string name="lbs">0 lbs</string>
 </resources>

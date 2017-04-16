@@ -1,27 +1,40 @@
 package com.darrenmoriarty.myfitnessapp.Login_Signup_activities;
 
+import android.annotation.TargetApi;
+import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.icu.text.SimpleDateFormat;
+import android.icu.util.Calendar;
+import android.os.Build;
+import android.os.SystemClock;
 import android.support.annotation.IdRes;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 
 import com.darrenmoriarty.myfitnessapp.R;
 
-import static com.darrenmoriarty.myfitnessapp.R.id.femaleRadioButton;
-import static com.darrenmoriarty.myfitnessapp.R.id.maleRadioButton;
+import java.util.Locale;
 
-public class DetailsSignUpActivity extends AppCompatActivity {
+import static com.darrenmoriarty.myfitnessapp.R.id.birthdateEditText;
+import static com.darrenmoriarty.myfitnessapp.R.id.breakfastRadioButton;
+import static com.darrenmoriarty.myfitnessapp.R.id.femaleRadioButton;
+import static com.darrenmoriarty.myfitnessapp.R.id.heightEditText;
+import static com.darrenmoriarty.myfitnessapp.R.id.maleRadioButton;
+import static com.darrenmoriarty.myfitnessapp.R.id.weightEditText;
+
+public class DetailsSignUpActivity extends AppCompatActivity implements View.OnClickListener, DatePickerDialog.OnDateSetListener {
 
     private Button mContinueButton;
     private EditText mFullNameField;
     private EditText mBirthdayField;
-    private Spinner mHeightSpinner;
-    private Spinner mWeightSpinner;
     private RadioGroup mGenderGroup;
     public static String gender;
     public static String BMRString;
@@ -34,6 +47,11 @@ public class DetailsSignUpActivity extends AppCompatActivity {
     public static String weight;
     public static String height;
 
+    private EditText mWeightEditText;
+    private EditText mHeightEditText;
+
+    private Calendar myCalendar;
+
     private String selectedGender;
 
     @Override
@@ -43,7 +61,7 @@ public class DetailsSignUpActivity extends AppCompatActivity {
 
         setTitle("Details Sign up");
 
-        Bundle b =  getIntent().getExtras();
+        Bundle b = getIntent().getExtras();
 
         if (b != null) {
 
@@ -57,13 +75,16 @@ public class DetailsSignUpActivity extends AppCompatActivity {
         System.out.println("Weight goals" + weightGoals + "   " + "Current" + currentActivity);
 
 
-
         mContinueButton = (Button) findViewById(R.id.continueButton);
         mFullNameField = (EditText) findViewById(R.id.fullnameEditText);
         mBirthdayField = (EditText) findViewById(R.id.birthdateEditText);
-        mHeightSpinner = (Spinner) findViewById(R.id.heightSpinner);
-        mWeightSpinner = (Spinner) findViewById(R.id.weightSpinner);
         mGenderGroup = (RadioGroup) findViewById(R.id.genderRadioGroup);
+        mWeightEditText = (EditText) findViewById(R.id.weightEditText);
+        mHeightEditText = (EditText) findViewById(R.id.heightEditText);
+
+        mBirthdayField.setOnClickListener(this);
+        mWeightEditText.setOnClickListener(this);
+        mHeightEditText.setOnClickListener(this);
 
 
         mGenderGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -86,7 +107,6 @@ public class DetailsSignUpActivity extends AppCompatActivity {
         });
 
 
-
     }
 
     public int calcBMR(int weightKG, int heightCm, int ageYears, String gender) {
@@ -105,7 +125,7 @@ public class DetailsSignUpActivity extends AppCompatActivity {
 
     public int calcBMI(int weightKg, int heightCm) {
 
-        return (weightKg / (heightCm / 10) *  (heightCm / 10));
+        return (weightKg / (heightCm / 10) * (heightCm / 10));
 
     }
 
@@ -185,8 +205,6 @@ public class DetailsSignUpActivity extends AppCompatActivity {
         Intent intent = new Intent(DetailsSignUpActivity.this, ActivateAccountActivity.class);
 
 
-
-
         System.out.println(BMRString);
         System.out.println(BMIString);
         System.out.println(TDEEString);
@@ -198,6 +216,46 @@ public class DetailsSignUpActivity extends AppCompatActivity {
         System.out.println(currentActivity);
         System.out.println(weightGoals);
         startActivity(intent);
+
+    }
+
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+
+        String date = dayOfMonth + "/" + month + "/" + year;
+
+        mBirthdayField.setText(date);
+
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()) {
+
+            case birthdateEditText:
+                myCalendar = Calendar.getInstance();
+                myCalendar.set(Calendar.YEAR, myCalendar.get(Calendar.YEAR));
+                myCalendar.set(Calendar.MONTH, myCalendar.get(Calendar.MONTH));
+                myCalendar.set(Calendar.DAY_OF_MONTH, myCalendar.get(Calendar.DAY_OF_MONTH));
+
+                DatePickerDialog dialog = new DatePickerDialog(this, this, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH));
+                dialog.show();
+                break;
+
+            case weightEditText:
+
+                    new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_alert).setTitle("Weight").show();
+                break;
+
+            case heightEditText:
+
+                break;
+
+
+        }
+
+
 
     }
 }

@@ -22,6 +22,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".Login_Signup_activities.WelcomeActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
         <activity android:name=".Login_Signup_activities.SignUpActivity">
         </activity>
@@ -57,11 +62,6 @@
             android:name=".pageractivities.MainHomePagerActivity"
             android:label="@string/title_activity_main_home_pager"
             android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
         <activity
             android:name=".NavigationDrawerActivity"
