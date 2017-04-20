@@ -3,7 +3,10 @@ package com.darrenmoriarty.myfitnessapp.Login_Signup_activities;
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.icu.text.SimpleDateFormat;
 import android.icu.util.Calendar;
 import android.os.Build;
@@ -12,15 +15,27 @@ import android.support.annotation.IdRes;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.darrenmoriarty.myfitnessapp.R;
 
+import org.w3c.dom.Text;
+
+import java.util.ArrayList;
 import java.util.Locale;
 
 import static com.darrenmoriarty.myfitnessapp.R.id.birthdateEditText;
@@ -28,6 +43,7 @@ import static com.darrenmoriarty.myfitnessapp.R.id.breakfastRadioButton;
 import static com.darrenmoriarty.myfitnessapp.R.id.femaleRadioButton;
 import static com.darrenmoriarty.myfitnessapp.R.id.heightEditText;
 import static com.darrenmoriarty.myfitnessapp.R.id.maleRadioButton;
+import static com.darrenmoriarty.myfitnessapp.R.id.setTextView;
 import static com.darrenmoriarty.myfitnessapp.R.id.weightEditText;
 
 public class DetailsSignUpActivity extends AppCompatActivity implements View.OnClickListener, DatePickerDialog.OnDateSetListener {
@@ -53,6 +69,25 @@ public class DetailsSignUpActivity extends AppCompatActivity implements View.OnC
     private Calendar myCalendar;
 
     private String selectedGender;
+
+    private AlertDialog.Builder builder;
+    private AlertDialog alert;
+    private View mView;
+    private TextView heightWeightTextView;
+    private EditText firstEdit;
+    private TextView firstTextView;
+    private EditText secondEditText;
+    private TextView secondTextView;
+    private TextView setText;
+    private Spinner spinner2;
+    private ArrayList<String> metrics = new ArrayList<>();
+    private ArrayAdapter mArrayAdapter;
+
+    private boolean isBothFields = false;
+    private boolean isHeightField = false;
+    private boolean isKg;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,6 +140,23 @@ public class DetailsSignUpActivity extends AppCompatActivity implements View.OnC
 
             }
         });
+
+        mView = getLayoutInflater().inflate(R.layout.height_dialog_layout, null);
+        builder = new AlertDialog.Builder(DetailsSignUpActivity.this);
+        heightWeightTextView = (TextView) mView.findViewById(R.id.heightWeightTextView);
+        firstEdit = (EditText) mView.findViewById(R.id.firstEdit);
+        firstTextView = (TextView) mView.findViewById(R.id.firstTextView);
+        secondEditText = (EditText) mView.findViewById(R.id.secondEditText);
+        secondTextView = (TextView) mView.findViewById(R.id.secondTextView);
+        setText = (TextView) mView.findViewById(R.id.setTextView);
+        //setText.setOnClickListener(this);
+        spinner2 = (Spinner) mView.findViewById(R.id.spinner2);
+        mArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, metrics);
+        mArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner2.setAdapter(mArrayAdapter);
+
+        builder.setView(mView);
+        alert = builder.create();
 
 
     }
@@ -173,6 +225,18 @@ public class DetailsSignUpActivity extends AppCompatActivity implements View.OnC
 
     }
 
+    public String convertWeight(String weight) {
+
+        return "";
+
+    }
+
+    public String convertHeight(String height) {
+
+        return "";
+
+    }
+
 
     public int convertToKG(int weight) {
 
@@ -228,8 +292,91 @@ public class DetailsSignUpActivity extends AppCompatActivity implements View.OnC
 
     }
 
+    public void setClick(View view) {
+
+        if (alert != null && alert.isShowing())
+        {
+
+            if (isHeightField) {
+
+                if (isBothFields) {
+
+                    if (!firstEdit.getText().toString().equals("") && !secondEditText.getText().toString().equals("")) {
+
+                        mHeightEditText.setText(firstEdit.getText().toString() + " ft, " + secondEditText.getText().toString() + " in");
+
+                    } else if (secondEditText.getText().toString().equals("")) {
+
+                        mHeightEditText.setText(firstEdit.getText().toString() + " ft, 0 in");
+
+                    } else {
+
+                        mHeightEditText.setText("0 ft, " + secondEditText.getText().toString() + " in");
+
+                    }
+
+
+
+                } else {
+
+                    mHeightEditText.setText(firstEdit.getText().toString() + " cm");
+
+                }
+
+            } else {
+
+
+                if (isBothFields) {
+
+                    if (!firstEdit.getText().toString().equals("") && !secondEditText.getText().toString().equals("")) {
+
+                        mWeightEditText.setText(firstEdit.getText().toString() + " stone, " +
+                                secondEditText.getText().toString() + " lbs");
+
+                    } else if (secondEditText.getText().toString().equals("")) {
+
+                        mWeightEditText.setText(firstEdit.getText().toString() + " stone, 0 lbs");
+
+                    } else {
+
+                        mWeightEditText.setText("0 stone, " +
+                                secondEditText.getText().toString() + " lbs");
+
+                    }
+
+
+
+                } else {
+
+                    if (isKg) {
+
+
+                        mWeightEditText.setText(firstEdit.getText().toString() + " kg");
+
+                    } else {
+
+                        mWeightEditText.setText(firstEdit.getText().toString() + " lbs");
+
+                    }
+
+
+                }
+
+            }
+
+
+            alert.cancel();
+        }
+
+
+    }
+
     @Override
     public void onClick(View v) {
+
+        firstEdit.setText("");
+        secondEditText.setText("");
+
 
         switch (v.getId()) {
 
@@ -243,12 +390,185 @@ public class DetailsSignUpActivity extends AppCompatActivity implements View.OnC
                 dialog.show();
                 break;
 
+            // when the weight edit text is selected the alert dialog i shown
             case weightEditText:
 
-                    new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_alert).setTitle("Weight").show();
+                heightWeightTextView.setText("Weight");
+
+                isHeightField = false;
+
+                metrics.clear();
+                metrics.add("lbs");
+                metrics.add("kg");
+                metrics.add("stone");
+
+                spinner2.setAdapter(mArrayAdapter);
+
+                // Spinner click listener
+                spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                        switch (position) {
+
+                            case 0:
+                                secondEditText.setVisibility(View.INVISIBLE);
+                                secondTextView.setVisibility(View.INVISIBLE);
+                                firstTextView.setText("lbs");
+
+                                isBothFields = false;
+
+                                isKg = false;
+
+                                if (!firstEdit.getText().toString().equals("")) {
+
+                                    mWeightEditText.setText(firstEdit.getText().toString() + " lbs");
+
+                                } else {
+
+                                    mWeightEditText.setText("0 lbs");
+
+                                }
+
+                                break;
+                            case 1:
+                                secondEditText.setVisibility(View.INVISIBLE);
+                                secondTextView.setVisibility(View.INVISIBLE);
+                                firstTextView.setText("kg");
+
+                                isBothFields = false;
+
+                                isKg = true;
+
+                                if (!firstEdit.getText().toString().equals("")) {
+
+                                    mWeightEditText.setText(firstEdit.getText().toString() + " kg");
+
+                                } else {
+
+                                    mWeightEditText.setText("0 kg");
+
+                                }
+
+                                break;
+                            case 2:
+                                secondEditText.setVisibility(View.VISIBLE);
+                                secondTextView.setVisibility(View.VISIBLE);
+                                firstTextView.setText("stone");
+                                secondTextView.setText("lbs");
+
+                                isBothFields = true;
+
+                                isKg = false;
+
+                                if (!firstEdit.getText().toString().equals("")) {
+
+                                    mWeightEditText.setText(firstEdit.getText().toString() + " stone" +
+                                            secondEditText.getText().toString() + " lbs");
+
+                                } else {
+
+                                    mWeightEditText.setText("0 stone, 0 lbs");
+
+                                }
+
+
+                                break;
+
+
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
+
+                alert.show();
+
                 break;
 
             case heightEditText:
+
+                isHeightField = true;
+
+                heightWeightTextView.setText("Height");
+
+                metrics.clear();
+                metrics.add("feet & inches");
+                metrics.add("cm");
+
+                isKg = false;
+
+                spinner2.setAdapter(mArrayAdapter);
+
+                // Spinner click listener
+                spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                        switch (position) {
+
+                            case 0:
+                                secondEditText.setVisibility(View.VISIBLE);
+                                secondTextView.setVisibility(View.VISIBLE);
+
+                                firstTextView.setText("ft");
+
+                                secondTextView.setText("in");
+
+
+                                isBothFields = true;
+
+                                if (!secondEditText.getText().toString().equals("")) {
+
+                                    mHeightEditText.setText(firstEdit + " ft," + secondEditText + " in");
+
+                                } else {
+
+                                    mHeightEditText.setText("0 ft, 0 in");
+
+                                }
+
+                                break;
+                            case 1:
+                                secondEditText.setVisibility(View.INVISIBLE);
+                                secondTextView.setVisibility(View.INVISIBLE);
+                                firstTextView.setText("cm");
+
+                                isBothFields = false;
+
+                                if (!secondEditText.getText().toString().equals("")) {
+
+                                    mHeightEditText.setText(firstEdit + " cm");
+
+                                } else {
+
+                                    mHeightEditText.setText("0 cm");
+
+                                }
+
+                                break;
+
+
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+
+
+                    }
+                });
+
+
+                alert.show();
 
                 break;
 
@@ -258,4 +578,6 @@ public class DetailsSignUpActivity extends AppCompatActivity implements View.OnC
 
 
     }
+
+
 }
