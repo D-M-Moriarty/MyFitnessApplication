@@ -141,6 +141,7 @@ public class RunningTracker extends FragmentActivity implements OnMapReadyCallba
                 // TODO reset all the attributes
                 // TODO save the users data for the activity
                 // TODO give the option to save the details
+                // TODO save favourite runs
 
                 isDrawing = false;
                 mChronometer.setBase(SystemClock.elapsedRealtime());

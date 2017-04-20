@@ -160,6 +160,7 @@
 
             <Button
                 android:id="@+id/continueButton"
+                style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="17dp"

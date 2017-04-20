@@ -1,109 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="20dp"
+    android:padding="0dp"
     tools:context="com.darrenmoriarty.myfitnessapp.Login_Signup_activities.ActivateAccountActivity">
 
-    <TextView
-        android:id="@+id/BMRTextViewHead"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:text="BMR"
-        android:textSize="30sp"/>
-
-    <TextView
-        android:id="@+id/BMRTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/BMRTextViewHead"
-        android:layout_marginTop="23dp"
-        android:text="1234"
-        android:textSize="30sp"/>
-
-    <TextView
-        android:id="@+id/BMITextViewHead"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="18dp"
-        android:text="BMI"
-        android:textSize="30sp"
-        android:layout_below="@+id/BMRTextView"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
-
-    <TextView
-        android:id="@+id/BMITextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/BMRTextView"
-        android:layout_alignRight="@+id/BMRTextView"
-        android:layout_below="@+id/BMITextViewHead"
-        android:layout_marginTop="31dp"
-        android:text="1234"
-        android:textAlignment="viewStart"
-        android:layout_gravity="start"
-        android:textSize="30sp"/>
-
-    <TextView
-        android:id="@+id/TDEETextViewHead"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="14dp"
-        android:text="TDEE"
-        android:textSize="30sp"
-        android:layout_below="@+id/BMITextView"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
-
-    <TextView
-        android:id="@+id/calorieGoalHead"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="75dp"
-        android:text="Calorie Goal"
-        android:textSize="30sp"
-        android:layout_below="@+id/TDEETextViewHead"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
-
-    <TextView
-        android:id="@+id/calorieGoalTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/calorieGoalHead"
-        android:layout_marginTop="41dp"
-        android:text="1234"
-        android:textSize="30sp"/>
-
-    <Button
-        android:id="@+id/activateButton"
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="34dp"
-        android:onClick="registerUserDetails"
-        android:text="Activate Account"/>
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/TDEETextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="13dp"
-        android:text="1234"
-        android:textSize="30sp"
-        android:layout_below="@+id/TDEETextViewHead"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
-</RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/TDEETextViewHead"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/BMITextView"
+                android:layout_marginTop="10dp"
+                android:text="@string/tdee"
+                android:textSize="30sp"/>
+
+            <TextView
+                android:id="@+id/TDEETextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/TDEETextViewHead"
+                android:layout_marginTop="13dp"
+                android:text="@string/_1234"
+                android:textSize="30sp"/>
+
+            <TextView
+                android:id="@+id/calorieGoalHead"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/TDEETextViewHead"
+                android:layout_marginTop="10dp"
+                android:text="@string/calorie_goal"
+                android:textSize="30sp"/>
+
+            <TextView
+                android:id="@+id/calorieGoalTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/calorieGoalHead"
+                android:layout_marginTop="10dp"
+                android:text="@string/_1234_"
+                android:textSize="30sp"/>
+
+            <TextView
+                android:id="@+id/BMRTextViewHead"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="10dp"
+                android:text="@string/bmr"
+                android:textSize="30sp"/>
+
+            <TextView
+                android:id="@+id/BMRTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/BMRTextViewHead"
+                android:layout_marginTop="10dp"
+                android:text="1234"
+                android:textSize="30sp"/>
+
+            <TextView
+                android:id="@+id/BMITextViewHead"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/BMRTextView"
+                android:layout_marginTop="10dp"
+                android:text="@string/bmi"
+                android:textSize="30sp"/>
+
+            <TextView
+                android:id="@+id/BMITextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@+id/BMRTextView"
+                android:layout_alignRight="@+id/BMRTextView"
+                android:layout_below="@+id/BMITextViewHead"
+                android:layout_gravity="start"
+                android:layout_marginTop="10dp"
+                android:text="1234"
+                android:textAlignment="viewStart"
+                android:textSize="30sp"/>
+
+            <Button
+                android:id="@+id/activateButton"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="0dp"
+                android:layout_marginTop="30dp"
+                android:onClick="registerUserDetails"
+                android:text="@string/activate_account"/>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+</LinearLayout>

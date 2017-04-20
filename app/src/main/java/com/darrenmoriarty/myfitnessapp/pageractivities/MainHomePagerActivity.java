@@ -1,6 +1,8 @@
 package com.darrenmoriarty.myfitnessapp.pageractivities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -16,12 +18,14 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.darrenmoriarty.myfitnessapp.Login_Signup_activities.WelcomeActivity;
 import com.darrenmoriarty.myfitnessapp.R;
 import com.darrenmoriarty.myfitnessapp.pageractivities.diet_package.DietTab;
 import com.darrenmoriarty.myfitnessapp.pageractivities.diet_package.FoodSearchActivity;
@@ -29,6 +33,10 @@ import com.darrenmoriarty.myfitnessapp.pageractivities.goals_package.GoalsTab;
 import com.darrenmoriarty.myfitnessapp.pageractivities.workout_package.RunningTracker;
 import com.darrenmoriarty.myfitnessapp.pageractivities.workout_package.TabataSettingActivity;
 import com.darrenmoriarty.myfitnessapp.pageractivities.workout_package.WorkoutsTab;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class MainHomePagerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -50,10 +58,52 @@ public class MainHomePagerActivity extends AppCompatActivity
     private Button startTracking;
     private Button startTabataTimer;
 
+    // [START declare_auth]
+    private FirebaseAuth mAuth;
+    // [START declare_auth_listener]
+    private FirebaseAuth.AuthStateListener mAuthListener;
+
+    private ProgressDialog mProgressDialog;
+
+
+    private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference mDatabaseReference;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_home_pager);
+
+        mAuth = FirebaseAuth.getInstance();
+
+        // Write a message to the database
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mDatabaseReference = mFirebaseDatabase.getReference().child("Users");
+
+        // [START auth_state_listener]
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+
+                // getting the current user
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+
+                if (user != null) {
+                    // User is signed in
+                    Log.d("TAG", "onAuthStateChanged:signed_in:" + user.getUid());
+
+                    // changing to the account activity
+                    //startActivity(new Intent(getApplicationContext(), MainActivity.class));
+
+                } else {
+                    // User is signed out
+                    Log.d("TAG", "onAuthStateChanged:signed_out");
+
+                    startActivity(new Intent(getApplicationContext(), WelcomeActivity.class));
+                }
+            }
+        };
+        // [END auth_state_listener]
 
         setTitle("");
 
@@ -110,6 +160,30 @@ public class MainHomePagerActivity extends AppCompatActivity
 
     }
 
+    // [START on_start_add_listener]
+    @Override
+    public void onStart() {
+        super.onStart();
+        mAuth.addAuthStateListener(mAuthListener);
+    }
+    // [END on_start_add_listener]
+
+    // [START on_stop_remove_listener]
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mAuthListener != null) {
+            mAuth.removeAuthStateListener(mAuthListener);
+        }
+    }
+    // [END on_stop_remove_listener]
+
+    private void logout() {
+
+        mAuth.signOut();
+
+    }
+
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -137,7 +211,13 @@ public class MainHomePagerActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+
             return true;
+
+        } else if (item.getItemId() == R.id.logout) {
+
+            logout();
+
         }
 
         return super.onOptionsItemSelected(item);

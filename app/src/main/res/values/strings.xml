@@ -38,4 +38,25 @@
     <string name="title_activity_food_search">FoodSearchActivity</string>
     <string name="_0_ft_0_in">0 ft, 0 in</string>
     <string name="lbs">0 lbs</string>
+    <string name="tdee">TDEE</string>
+    <string name="_1234">1234</string>
+    <string name="calorie_goal">Calorie Goal</string>
+    <string name="_1234_">1234</string>
+    <string name="bmr">BMR</string>
+    <string name="bmi">BMI</string>
+    <string name="activate_account">Activate Account</string>
+    <string name="nutrition_facts">Nutrition Facts</string>
+    <string name="serving_size">Serving size</string>
+    <string name="_2_cals">2 cals</string>
+    <string name="meal_amp_snack_time"><![CDATA[Meal & Snack Time]]></string>
+    <string name="anytime">ANYTIME</string>
+    <string name="breakfast">BREAKFAST</string>
+    <string name="lunch">LUNCH</string>
+    <string name="dinner">DINNER</string>
+    <string name="morning_snack">MORNING SNACK</string>
+    <string name="afternoon_snack">AFTERNOON SNACK</string>
+    <string name="evening_snack">EVENING SNACK</string>
+    <string name="day">DAY</string>
+    <string name="log_add_more"><![CDATA[LOG & ADD MORE]]></string>
+    <string name="log_this">log this</string>
 </resources>

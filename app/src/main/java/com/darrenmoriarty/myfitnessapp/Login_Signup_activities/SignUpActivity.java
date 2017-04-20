@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.darrenmoriarty.myfitnessapp.HomeScreen;
 import com.darrenmoriarty.myfitnessapp.R;
+import com.darrenmoriarty.myfitnessapp.pageractivities.MainHomePagerActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -145,19 +146,22 @@ public class SignUpActivity extends AppCompatActivity {
 
                                 currentUserDb.child("username").setValue(name);
                                 currentUserDb.child("BMI").setValue(DetailsSignUpActivity.BMIString);
-                                currentUserDb.child("TDEE").setValue(DetailsSignUpActivity.BMRString);
+                                currentUserDb.child("TDEE").setValue(DetailsSignUpActivity.TDEEString);
                                 currentUserDb.child("Gender").setValue(DetailsSignUpActivity.gender);
-                                currentUserDb.child("Height").setValue(DetailsSignUpActivity.height);
-                                currentUserDb.child("Weight").setValue(DetailsSignUpActivity.weight);
+                                currentUserDb.child("Height CM").setValue(DetailsSignUpActivity.height);
+                                currentUserDb.child("Weight KG").setValue(DetailsSignUpActivity.weight);
                                 currentUserDb.child("Fullname").setValue(DetailsSignUpActivity.fullName);
                                 currentUserDb.child("Current Activity").setValue(DetailsSignUpActivity.currentActivity);
-                                currentUserDb.child("Weight Goal").setValue(DetailsSignUpActivity.weight);
+                                currentUserDb.child("Weight Goal").setValue(DetailsSignUpActivity.weightGoals);
                                 currentUserDb.child("Calorie Goal").setValue(DetailsSignUpActivity.calorieGoal);
+                                currentUserDb.child("Birthdate").setValue(DetailsSignUpActivity.birthdate);
+                                currentUserDb.child("Fullname").setValue(DetailsSignUpActivity.fullName);
+                                currentUserDb.child("BMR").setValue(DetailsSignUpActivity.BMRString);
 
 
                                 mProgressDialog.dismiss();
 
-                                Intent mainIntent = new Intent(SignUpActivity.this, HomeScreen.class);
+                                Intent mainIntent = new Intent(SignUpActivity.this, MainHomePagerActivity.class);
                                 startActivity(mainIntent);
 
                             }

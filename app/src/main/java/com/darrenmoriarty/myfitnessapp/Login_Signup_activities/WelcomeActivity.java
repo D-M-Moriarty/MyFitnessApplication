@@ -10,6 +10,7 @@ import android.widget.Button;
 
 import com.darrenmoriarty.myfitnessapp.HomeScreen;
 import com.darrenmoriarty.myfitnessapp.R;
+import com.darrenmoriarty.myfitnessapp.pageractivities.MainHomePagerActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -40,7 +41,7 @@ public class WelcomeActivity extends AppCompatActivity {
         if (firebaseUser != null) {
 
             // changing to the account activity
-            startActivity(new Intent(WelcomeActivity.this, HomeScreen.class));
+            startActivity(new Intent(WelcomeActivity.this, MainHomePagerActivity.class));
 
         }
 
@@ -80,7 +81,7 @@ public class WelcomeActivity extends AppCompatActivity {
                     Log.d("TAG", "onAuthStateChanged:signed_in:" + user.getUid());
 
                     // changing to the account activity
-                    startActivity(new Intent(WelcomeActivity.this, HomeScreen.class));
+                    startActivity(new Intent(WelcomeActivity.this, MainHomePagerActivity.class));
 
                 } else {
 

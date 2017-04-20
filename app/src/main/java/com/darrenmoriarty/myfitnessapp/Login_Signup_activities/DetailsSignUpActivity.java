@@ -16,6 +16,7 @@ import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -62,6 +63,7 @@ public class DetailsSignUpActivity extends AppCompatActivity implements View.OnC
     public static String fullName;
     public static String weight;
     public static String height;
+    public static String birthdate;
 
     private EditText mWeightEditText;
     private EditText mHeightEditText;
@@ -108,6 +110,8 @@ public class DetailsSignUpActivity extends AppCompatActivity implements View.OnC
         }
 
         System.out.println("Weight goals" + weightGoals + "   " + "Current" + currentActivity);
+
+        // TODO make sure the weight and height is validated correctly
 
 
         mContinueButton = (Button) findViewById(R.id.continueButton);
@@ -225,15 +229,201 @@ public class DetailsSignUpActivity extends AppCompatActivity implements View.OnC
 
     }
 
-    public String convertWeight(String weight) {
+    public String convertWeighttoKg(String weight) {
 
-        return "";
+        if (weight.length() > 8) {
+
+            String stonePart = "";
+
+            int pos = 0;
+
+            for (int i = 0; i < weight.length(); i++) {
+
+                if (!Character.isDigit(weight.charAt(i))) {
+                    pos = i;
+                    break;
+                }
+
+            }
+
+            for (int i = 0; i < pos; i++) {
+
+                stonePart += weight.charAt(i);
+
+            }
+
+            System.out.println(stonePart);
+
+            String lbsPart = "";
+
+            if (stonePart.length() > 1) {
+                lbsPart += weight.charAt(10);
+                lbsPart += weight.charAt(11);
+
+            } else {
+
+                lbsPart += weight.charAt(10);
+
+            }
+
+            if (Character.isDigit(lbsPart.charAt(0)) && Character.isDigit(lbsPart.charAt(1))) {
+
+                int stone = Integer.parseInt(stonePart);
+
+                int stoneTolbs = stone * 14;
+
+                int lbs = Integer.parseInt(lbsPart);
+
+                System.out.println(stoneTolbs);
+
+                System.out.println(lbs);
+
+                lbs += stoneTolbs;
+
+                System.out.println(lbs);
+
+                double kg = lbs / 2.2;
+
+                System.out.println((int)kg);
+
+                return Integer.toString((int) kg);
+
+            } else {
+
+                int stone = Integer.parseInt(stonePart);
+
+                int stoneTolbs = stone * 14;
+
+                int lbs = Integer.parseInt(String.valueOf(lbsPart.charAt(0)));
+
+                System.out.println(stoneTolbs);
+
+                System.out.println(lbs);
+
+                lbs += stoneTolbs;
+
+                System.out.println(lbs);
+
+                double kg = lbs / 2.2;
+
+                System.out.println((int)kg);
+
+                return Integer.toString((int) kg);
+
+            }
+
+
+
+
+
+        } else if (weight.charAt(weight.length() - 1) == 's') {
+
+            String lbsS = "";
+
+            for (int i = 0; i < weight.length(); i++) {
+
+                if (Character.isDigit(weight.charAt(i))) {
+
+                    lbsS += weight.charAt(i);
+
+                }
+
+            }
+
+            int lbs = Integer.parseInt(lbsS);
+
+            System.out.println(lbs);
+
+            double kg = lbs / 2.2;
+
+
+            return Integer.toString((int) kg);
+
+
+        } else {
+
+            String kgS = "";
+
+            for (int i = 0; i < weight.length(); i++) {
+
+                if (Character.isDigit(weight.charAt(i))) {
+
+                    kgS += weight.charAt(i);
+
+                }
+
+            }
+
+            int kg = Integer.parseInt(kgS);
+
+            System.out.println(kg);
+
+            return Integer.toString(kg);
+
+
+        }
+
 
     }
 
-    public String convertHeight(String height) {
+    public String convertHeighttoCm(String height) {
 
-        return "";
+        String num = "";
+
+        if (height.charAt(height.length() - 1) == 'n') {
+
+            //0 ft, 0 in
+
+            String in = "";
+
+            char feet = height.charAt(0);
+            in += height.charAt(6);
+
+            if (height.length() > 10) {
+                in += height.charAt(7);
+            }
+
+            int inches = Integer.parseInt(in);
+
+            int feetInch = Character.getNumericValue(feet);
+
+            int feetConverted = feetInch * 12;
+
+            int allInches = feetConverted + inches;
+
+
+            double allInchtoCm = allInches * 2.54;
+
+
+            return Integer.toString((int) allInchtoCm);
+
+
+
+        } else {
+
+            int pos = 0;
+
+            for (int i = 0; i < height.length(); i++) {
+
+                if (height.charAt(i) == ' ') {
+
+                    pos = i;
+
+                }
+
+            }
+
+            String numCm = "";
+
+            for (int i = 0; i < pos; i++) {
+
+                numCm += height.charAt(i);
+
+            }
+
+            return numCm;
+
+        }
 
     }
 
@@ -253,13 +443,19 @@ public class DetailsSignUpActivity extends AppCompatActivity implements View.OnC
 
     public void toActivate(View view) {
 
+        int realWeight = Integer.parseInt(convertWeighttoKg(mWeightEditText.getText().toString()));
+        int realHeight = Integer.parseInt(convertHeighttoCm(mHeightEditText.getText().toString()));
+
+        System.out.println(realHeight + " real height");
+        System.out.println(realWeight + " real weight");
+
         fullName = mFullNameField.getText().toString().trim();
-        String birthdate = mBirthdayField.getText().toString().trim();
-        height = "6.0";
-        weight = "200";
-        int BMR = calcBMR(100, 182, 25, gender);
+        birthdate = mBirthdayField.getText().toString().trim();
+        height = convertHeighttoCm(mHeightEditText.getText().toString());
+        weight = convertWeighttoKg(mWeightEditText.getText().toString());
+        int BMR = calcBMR(realWeight, realHeight, 25, gender);
         BMRString = Integer.toString(BMR);
-        int BMI = calcBMI(100, 182);
+        int BMI = calcBMI(realWeight, realHeight);
         BMIString = Integer.toString(BMI);
         int TDEE = calcTDEE(currentActivity, BMR);
         TDEEString = Integer.toString(TDEE);
@@ -286,7 +482,7 @@ public class DetailsSignUpActivity extends AppCompatActivity implements View.OnC
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
 
-        String date = dayOfMonth + "/" + month + "/" + year;
+        String date = dayOfMonth + "/" + (month + 1) + "/" + year;
 
         mBirthdayField.setText(date);
 
@@ -309,7 +505,7 @@ public class DetailsSignUpActivity extends AppCompatActivity implements View.OnC
 
                         mHeightEditText.setText(firstEdit.getText().toString() + " ft, 0 in");
 
-                    } else {
+                    } else if (firstEdit.getText().toString().equals("")){
 
                         mHeightEditText.setText("0 ft, " + secondEditText.getText().toString() + " in");
 
@@ -416,6 +612,15 @@ public class DetailsSignUpActivity extends AppCompatActivity implements View.OnC
                                 secondTextView.setVisibility(View.INVISIBLE);
                                 firstTextView.setText("lbs");
 
+                                firstEdit.setText("");
+                                secondEditText.setText("");
+
+                                int maxLength = 3;
+                                InputFilter[] FilterArray = new InputFilter[1];
+                                FilterArray[0] = new InputFilter.LengthFilter(maxLength);
+                                firstEdit.setFilters(FilterArray);
+                                isBothFields = true;
+
                                 isBothFields = false;
 
                                 isKg = false;
@@ -435,6 +640,15 @@ public class DetailsSignUpActivity extends AppCompatActivity implements View.OnC
                                 secondEditText.setVisibility(View.INVISIBLE);
                                 secondTextView.setVisibility(View.INVISIBLE);
                                 firstTextView.setText("kg");
+
+                                firstEdit.setText("");
+                                secondEditText.setText("");
+
+                                maxLength = 3;
+                                FilterArray = new InputFilter[1];
+                                FilterArray[0] = new InputFilter.LengthFilter(maxLength);
+                                firstEdit.setFilters(FilterArray);
+                                isBothFields = true;
 
                                 isBothFields = false;
 
@@ -456,6 +670,15 @@ public class DetailsSignUpActivity extends AppCompatActivity implements View.OnC
                                 secondTextView.setVisibility(View.VISIBLE);
                                 firstTextView.setText("stone");
                                 secondTextView.setText("lbs");
+
+                                firstEdit.setText("");
+                                secondEditText.setText("");
+
+                                maxLength = 2;
+                                FilterArray = new InputFilter[1];
+                                FilterArray[0] = new InputFilter.LengthFilter(maxLength);
+                                firstEdit.setFilters(FilterArray);
+                                isBothFields = true;
 
                                 isBothFields = true;
 
@@ -516,11 +739,17 @@ public class DetailsSignUpActivity extends AppCompatActivity implements View.OnC
                                 secondEditText.setVisibility(View.VISIBLE);
                                 secondTextView.setVisibility(View.VISIBLE);
 
+                                firstEdit.setText("");
+                                secondEditText.setText("");
+
                                 firstTextView.setText("ft");
 
                                 secondTextView.setText("in");
 
-
+                                int maxLength = 1;
+                                InputFilter[] FilterArray = new InputFilter[1];
+                                FilterArray[0] = new InputFilter.LengthFilter(maxLength);
+                                firstEdit.setFilters(FilterArray);
                                 isBothFields = true;
 
                                 if (!secondEditText.getText().toString().equals("")) {
@@ -538,6 +767,15 @@ public class DetailsSignUpActivity extends AppCompatActivity implements View.OnC
                                 secondEditText.setVisibility(View.INVISIBLE);
                                 secondTextView.setVisibility(View.INVISIBLE);
                                 firstTextView.setText("cm");
+
+                                firstEdit.setText("");
+                                secondEditText.setText("");
+
+                                maxLength = 3;
+                                FilterArray = new InputFilter[1];
+                                FilterArray[0] = new InputFilter.LengthFilter(maxLength);
+                                firstEdit.setFilters(FilterArray);
+                                isBothFields = true;
 
                                 isBothFields = false;
 

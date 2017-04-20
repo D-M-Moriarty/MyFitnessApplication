@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.darrenmoriarty.myfitnessapp.HomeScreen;
 import com.darrenmoriarty.myfitnessapp.R;
+import com.darrenmoriarty.myfitnessapp.pageractivities.MainHomePagerActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -77,7 +78,7 @@ public class LoginActivity extends AppCompatActivity {
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
 
                     // changing to the account activity
-                    startActivity(new Intent(LoginActivity.this, HomeScreen.class));
+                    startActivity(new Intent(LoginActivity.this, MainHomePagerActivity.class));
 
                 } else {
 

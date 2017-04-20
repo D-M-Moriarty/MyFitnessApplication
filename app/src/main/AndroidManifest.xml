@@ -70,7 +70,8 @@
         </activity>
         <activity android:name=".pageractivities.workout_package.TabataSettingActivity">
         </activity>
-        <activity android:name=".pageractivities.workout_package.TabataMainActivity">
+        <activity android:name=".pageractivities.workout_package.TabataMainActivity"
+                  android:configChanges="orientation|screenSize">
         </activity>
         <activity
             android:name=".pageractivities.diet_package.FoodSearchActivity"

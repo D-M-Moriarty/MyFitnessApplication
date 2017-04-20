@@ -21,6 +21,7 @@
 
             <Button
                 android:id="@+id/signUpWithEmailButton"
+                style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -31,6 +32,7 @@
 
             <Button
                 android:id="@+id/googleSignUp"
+                style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/signUpWithEmailButton"
@@ -40,6 +42,7 @@
 
             <Button
                 android:id="@+id/facebookSignUp"
+                style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/googleSignUp"
