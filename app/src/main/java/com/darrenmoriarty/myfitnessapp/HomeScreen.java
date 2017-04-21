@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 
 import com.darrenmoriarty.myfitnessapp.Login_Signup_activities.WelcomeActivity;
 import com.google.firebase.auth.FirebaseAuth;

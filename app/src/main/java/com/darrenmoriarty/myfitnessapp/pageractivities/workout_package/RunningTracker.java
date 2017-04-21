@@ -3,6 +3,7 @@ package com.darrenmoriarty.myfitnessapp.pageractivities.workout_package;
 import android.*;
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
@@ -60,6 +61,10 @@ public class RunningTracker extends FragmentActivity implements OnMapReadyCallba
     private Button startDurationTimerBtn;
     private Chronometer mChronometer;
     private TextView distanceValueText;
+    private Button holdToFinishButton;
+    private Button resumeButton;
+
+    public static String durationT = "";
 
     // Timer attributes
     private Timer timer;
@@ -90,6 +95,8 @@ public class RunningTracker extends FragmentActivity implements OnMapReadyCallba
         startDurationTimerBtn = (Button) findViewById(R.id.startWorkoutButton);
         mChronometer = (Chronometer) findViewById(R.id.chronometerTimer);
         distanceValueText = (TextView) findViewById(R.id.distanceValueTextView);
+        holdToFinishButton = (Button) findViewById(R.id.holdFinishButton);
+        resumeButton = (Button) findViewById(R.id.resumeWorkoutButton);
 
         distanceValueText.setText("0.00 m");
 
@@ -126,7 +133,9 @@ public class RunningTracker extends FragmentActivity implements OnMapReadyCallba
                     isDrawing = false;
                     timeWhenStopped = mChronometer.getBase() - SystemClock.elapsedRealtime();
                     mChronometer.stop();
-                    startDurationTimerBtn.setText("click to resume : hold to finish");
+                    startDurationTimerBtn.setVisibility(View.INVISIBLE);
+                    holdToFinishButton.setVisibility(View.VISIBLE);
+                    resumeButton.setVisibility(View.VISIBLE);
 
                 }
 
@@ -155,6 +164,74 @@ public class RunningTracker extends FragmentActivity implements OnMapReadyCallba
 
 
                 startDurationTimerBtn.setText("start workout");
+
+
+
+                return true;
+            }
+        });
+
+        // resuming the workout
+        resumeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                startDurationTimerBtn.setVisibility(View.VISIBLE);
+                holdToFinishButton.setVisibility(View.INVISIBLE);
+                resumeButton.setVisibility(View.INVISIBLE);
+
+                mChronometer.setBase(SystemClock.elapsedRealtime() + timeWhenStopped);
+                mChronometer.start();
+
+                isDrawing = true;
+
+            }
+        });
+
+        // finish the workout
+        holdToFinishButton.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+
+                // TODO reset all the attributes
+                // TODO save the users data for the activity
+                // TODO give the option to save the details
+                // TODO save favourite runs
+
+                durationT = mChronometer.getText().toString();
+
+                System.out.println("The duration is " + durationT);
+                System.out.println("The distance is " + distance);
+
+                isDrawing = false;
+                mChronometer.setBase(SystemClock.elapsedRealtime());
+                timeWhenStopped = 0;
+                mChronometer.stop();
+                mChronometer.setText("00:00");
+
+                Intent intent = new Intent(getApplicationContext(), RecordFinishActivity.class);
+
+                //intent.putParcelableArrayListExtra("points", points);
+                intent.putExtra("duration", durationT);
+                intent.putExtra("distance", distance);
+
+                Bundle bundle = new Bundle();
+                bundle.putParcelableArrayList("points", points);
+
+                intent.putExtras(bundle);
+
+                startActivity(intent);
+
+                distanceValueText.setText("0.00 m");
+
+                points.clear();
+
+
+                startDurationTimerBtn.setText("start workout");
+
+                startDurationTimerBtn.setVisibility(View.VISIBLE);
+                holdToFinishButton.setVisibility(View.INVISIBLE);
+                resumeButton.setVisibility(View.INVISIBLE);
 
 
 

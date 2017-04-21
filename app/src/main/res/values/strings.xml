@@ -59,4 +59,5 @@
     <string name="day">DAY</string>
     <string name="log_add_more"><![CDATA[LOG & ADD MORE]]></string>
     <string name="log_this">log this</string>
+    <string name="title_activity_saved_routes">SavedRoutesActivity</string>
 </resources>
