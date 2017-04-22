@@ -15,6 +15,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -63,6 +64,7 @@ public class RunningTracker extends FragmentActivity implements OnMapReadyCallba
     private TextView distanceValueText;
     private Button holdToFinishButton;
     private Button resumeButton;
+    private CardView loadRoutesCardView;
 
     public static String durationT = "";
 
@@ -97,6 +99,7 @@ public class RunningTracker extends FragmentActivity implements OnMapReadyCallba
         distanceValueText = (TextView) findViewById(R.id.distanceValueTextView);
         holdToFinishButton = (Button) findViewById(R.id.holdFinishButton);
         resumeButton = (Button) findViewById(R.id.resumeWorkoutButton);
+        loadRoutesCardView = (CardView) findViewById(R.id.loadRoutesCardView);
 
         distanceValueText.setText("0.00 m");
 
@@ -143,33 +146,33 @@ public class RunningTracker extends FragmentActivity implements OnMapReadyCallba
             }
         });
 
-        startDurationTimerBtn.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-
-                // TODO reset all the attributes
-                // TODO save the users data for the activity
-                // TODO give the option to save the details
-                // TODO save favourite runs
-
-                isDrawing = false;
-                mChronometer.setBase(SystemClock.elapsedRealtime());
-                timeWhenStopped = 0;
-                mChronometer.stop();
-                mChronometer.setText("00:00");
-
-                distanceValueText.setText("0.00 m");
-
-                points.clear();
-
-
-                startDurationTimerBtn.setText("start workout");
-
-
-
-                return true;
-            }
-        });
+//        startDurationTimerBtn.setOnLongClickListener(new View.OnLongClickListener() {
+//            @Override
+//            public boolean onLongClick(View v) {
+//
+//                // TODO reset all the attributes
+//                // TODO save the users data for the activity
+//                // TODO give the option to save the details
+//                // TODO save favourite runs
+//
+//                isDrawing = false;
+//                mChronometer.setBase(SystemClock.elapsedRealtime());
+//                timeWhenStopped = 0;
+//                mChronometer.stop();
+//                mChronometer.setText("00:00");
+//
+//                distanceValueText.setText("0.00 m");
+//
+//                points.clear();
+//
+//
+//                startDurationTimerBtn.setText("start workout");
+//
+//
+//
+//                return true;
+//            }
+//        });
 
         // resuming the workout
         resumeButton.setOnClickListener(new View.OnClickListener() {
@@ -220,7 +223,11 @@ public class RunningTracker extends FragmentActivity implements OnMapReadyCallba
 
                 intent.putExtras(bundle);
 
-                startActivity(intent);
+                if (points.size() > 1 && distance > 0)
+                    startActivity(intent);
+                else
+                    Toast.makeText(RunningTracker.this, "Cannot save this activiity", Toast.LENGTH_SHORT).show();
+
 
                 distanceValueText.setText("0.00 m");
 
@@ -236,6 +243,13 @@ public class RunningTracker extends FragmentActivity implements OnMapReadyCallba
 
 
                 return true;
+            }
+        });
+
+        loadRoutesCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), SavedRoutesActivity.class));
             }
         });
 

@@ -50,8 +50,8 @@
         android:id="@+id/durationHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="81dp"
-        android:layout_marginTop="178dp"
+        android:layout_marginLeft="77dp"
+        android:layout_marginTop="152dp"
         android:text="Duration"
         android:textSize="18sp"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -62,15 +62,12 @@
         android:id="@+id/theDuration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="14dp"
+        android:layout_marginTop="31dp"
         android:text="00:00"
         android:textSize="14sp"
-        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/durationHeader"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintVertical_bias="0.087"
-        app:layout_constraintRight_toLeftOf="@+id/distanceValue"/>
+        android:layout_marginLeft="100dp"
+        app:layout_constraintLeft_toLeftOf="parent"/>
 
     <TextView
         android:id="@+id/distanceHeader"
@@ -79,8 +76,8 @@
         android:text="Distance"
         android:textSize="18sp"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="178dp"
-        android:layout_marginRight="70dp"
+        android:layout_marginTop="152dp"
+        android:layout_marginRight="77dp"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginEnd="70dp"/>
 
@@ -89,13 +86,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="2.2 km"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/theDuration"
-        app:layout_constraintTop_toBottomOf="@+id/distanceHeader"/>
+        android:layout_marginTop="31dp"
+        app:layout_constraintTop_toBottomOf="@+id/distanceHeader"
+        android:layout_marginRight="87dp"
+        app:layout_constraintRight_toRightOf="parent"/>
 
     <android.support.constraint.Guideline
         android:layout_width="wrap_content"

@@ -1,5 +1,6 @@
 package com.darrenmoriarty.myfitnessapp.pageractivities.workout_package;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
@@ -7,9 +8,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.darrenmoriarty.myfitnessapp.R;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.StreetViewPanoramaCamera;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -17,6 +20,7 @@ import org.json.JSONObject;
 import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -28,6 +32,8 @@ public class RecordFinishActivity extends AppCompatActivity {
     private String durationS;
     private double distance;
     private EditText runTitle;
+    private TextView durationText;
+    private TextView distanceText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,10 +45,8 @@ public class RecordFinishActivity extends AppCompatActivity {
         saveWorkoutButton = (Button) findViewById(R.id.saveButton);
         discardButton = (Button) findViewById(R.id.discardButton);
         runTitle = (EditText) findViewById(R.id.titleEditText);
-//
-//        Bundle bundle = new Bundle();
-//
-//        points = bundle.getParcelableArrayList("points");
+        durationText = (TextView) findViewById(R.id.theDuration);
+        distanceText = (TextView) findViewById(R.id.distanceValue);
 
         points = getIntent().getParcelableArrayListExtra("points");
 
@@ -52,7 +56,17 @@ public class RecordFinishActivity extends AppCompatActivity {
         System.out.println("The distance " + distance);
         System.out.println("The duration " + durationS);
 
+        String dist = Double.toString(distance);
+
+        // TODO fix the issue with the string format of the double value
+        //dist = String.format(Locale.UK, "%.2f m", dist);
+
+        //System.out.println(String.format(Locale.UK, "%.2f", dist));
+
         System.out.println(points);
+
+        durationText.setText(durationS);
+        distanceText.setText(dist);
 
         // save the workout details
         saveWorkoutButton.setOnClickListener(new View.OnClickListener() {
@@ -73,8 +87,9 @@ public class RecordFinishActivity extends AppCompatActivity {
 
                     sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS Routes (RunTitle VARCHAR, Duration VARCHAR, Distance REAL, Coordinates VARCHAR)");
 
-                    sqLiteDatabase.execSQL("INSERT INTO Routes (RunTitle, Duration, Distance, Coordinates) VALUES ('21/04/2017', '" +
-                                            durationS + "', '" + distance + "', '" + points.toString() + "')");
+                    sqLiteDatabase.execSQL("INSERT INTO Routes (RunTitle, Duration, Distance, Coordinates) VALUES ('"
+                            + runTitle.getText().toString() + "', '" +
+                            durationS + "', " + distance + ", '" + points.toString() + "')");
 
                     Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM Routes", null);
 
@@ -85,16 +100,21 @@ public class RecordFinishActivity extends AppCompatActivity {
 
                     cursor.moveToFirst();
 
-                    while (cursor != null) {
+                    int i = 1;
 
-                        System.out.println("Run title " + cursor.getString(runTitleInt));
-                        System.out.println("Duration " + cursor.getString(durationInt));
-                        System.out.println("Distance " + cursor.getString(distanceInt));
-                        System.out.println("Coordinates " + cursor.getString(coordinatesInt));
-
-                        cursor.moveToNext();
-
+                    // checking to see that the information is in the database
+                    if (cursor != null && cursor.moveToNext()) {
+                        do {
+                            System.out.println("This is set " + i);
+                            System.out.println("Run title " + cursor.getString(runTitleInt));
+                            System.out.println("Duration " + cursor.getString(durationInt));
+                            System.out.println("Distance " + cursor.getString(distanceInt));
+                            System.out.println("Coordinates " + cursor.getString(coordinatesInt));
+                            i++;
+                        } while (cursor.moveToNext());
                     }
+
+                    startActivity(new Intent(getApplicationContext(), RunningTracker.class));
 
 
                 }
@@ -104,6 +124,14 @@ public class RecordFinishActivity extends AppCompatActivity {
                 }
 
 
+            }
+        });
+
+        // discard the information
+        discardButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), RunningTracker.class));
             }
         });
 

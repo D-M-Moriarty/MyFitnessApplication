@@ -86,6 +86,10 @@
         </activity>
         <activity android:name=".pageractivities.workout_package.RecordFinishActivity">
         </activity>
+        <activity
+            android:name=".pageractivities.workout_package.RouteDetailsMapsActivity"
+            android:label="@string/title_activity_route_details_maps">
+        </activity>
     </application>
 
 </manifest>
