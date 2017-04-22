@@ -27,6 +27,7 @@ import android.widget.Toast;
 
 import com.darrenmoriarty.myfitnessapp.Login_Signup_activities.WelcomeActivity;
 import com.darrenmoriarty.myfitnessapp.R;
+import com.darrenmoriarty.myfitnessapp.pageractivities.diet_package.DietDiaryActivity;
 import com.darrenmoriarty.myfitnessapp.pageractivities.diet_package.DietTab;
 import com.darrenmoriarty.myfitnessapp.pageractivities.diet_package.FoodSearchActivity;
 import com.darrenmoriarty.myfitnessapp.pageractivities.goals_package.GoalsTab;
@@ -151,6 +152,13 @@ public class MainHomePagerActivity extends AppCompatActivity
     public void logFood(View view) {
 
         startActivity(new Intent(MainHomePagerActivity.this, FoodSearchActivity.class));
+    }
+
+    // view food diary
+    public void viewDiary(View view) {
+
+        startActivity(new Intent(MainHomePagerActivity.this, DietDiaryActivity.class));
+
     }
 
     // starting the tabata timer activity

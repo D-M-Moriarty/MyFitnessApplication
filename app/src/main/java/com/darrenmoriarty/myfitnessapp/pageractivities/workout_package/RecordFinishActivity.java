@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.darrenmoriarty.myfitnessapp.R;
 import com.google.android.gms.maps.model.LatLng;
@@ -83,13 +84,14 @@ public class RecordFinishActivity extends AppCompatActivity {
 
                 try {
 
+
+                    boolean taken = false;
+
+                    // TODO manage lifecycle so that you cannot go back between activities
+
                     SQLiteDatabase sqLiteDatabase = openOrCreateDatabase("RoutesInfo", MODE_PRIVATE, null);
 
                     sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS Routes (RunTitle VARCHAR, Duration VARCHAR, Distance REAL, Coordinates VARCHAR)");
-
-                    sqLiteDatabase.execSQL("INSERT INTO Routes (RunTitle, Duration, Distance, Coordinates) VALUES ('"
-                            + runTitle.getText().toString() + "', '" +
-                            durationS + "', " + distance + ", '" + points.toString() + "')");
 
                     Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM Routes", null);
 
@@ -110,11 +112,29 @@ public class RecordFinishActivity extends AppCompatActivity {
                             System.out.println("Duration " + cursor.getString(durationInt));
                             System.out.println("Distance " + cursor.getString(distanceInt));
                             System.out.println("Coordinates " + cursor.getString(coordinatesInt));
+
+                            if (cursor.getString(runTitleInt).equals(runTitle.getText().toString()))
+                                taken = true;
+
                             i++;
                         } while (cursor.moveToNext());
                     }
 
-                    startActivity(new Intent(getApplicationContext(), RunningTracker.class));
+                    if (taken || cursor == null) {
+
+                        Toast.makeText(RecordFinishActivity.this, "Cannot save Rename", Toast.LENGTH_SHORT).show();
+
+                    } else {
+
+                        System.out.println("Doing the insert");
+                        sqLiteDatabase.execSQL("INSERT INTO Routes (RunTitle, Duration, Distance, Coordinates) VALUES ('"
+                                + runTitle.getText().toString() + "', '" +
+                                durationS + "', " + distance + ", '" + points.toString() + "')");
+
+                        startActivity(new Intent(getApplicationContext(), RunningTracker.class));
+
+                    }
+
 
 
                 }

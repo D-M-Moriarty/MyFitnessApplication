@@ -90,6 +90,8 @@
             android:name=".pageractivities.workout_package.RouteDetailsMapsActivity"
             android:label="@string/title_activity_route_details_maps">
         </activity>
+        <activity android:name=".pageractivities.diet_package.DietDiaryActivity">
+        </activity>
     </application>
 
 </manifest>
