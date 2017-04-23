@@ -126,6 +126,7 @@ public class LoginActivity extends AppCompatActivity {
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
+
                             Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
 
                             // If sign in fails, display a message to the user. If sign in succeeds

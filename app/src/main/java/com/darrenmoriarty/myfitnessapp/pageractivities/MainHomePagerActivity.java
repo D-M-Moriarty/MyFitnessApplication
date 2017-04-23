@@ -36,8 +36,13 @@ import com.darrenmoriarty.myfitnessapp.pageractivities.workout_package.TabataSet
 import com.darrenmoriarty.myfitnessapp.pageractivities.workout_package.WorkoutsTab;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.Map;
 
 public class MainHomePagerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -58,6 +63,7 @@ public class MainHomePagerActivity extends AppCompatActivity
     private ViewPager mViewPager;
     private Button startTracking;
     private Button startTabataTimer;
+    private Button testDatabase;
 
     // [START declare_auth]
     private FirebaseAuth mAuth;
@@ -70,6 +76,9 @@ public class MainHomePagerActivity extends AppCompatActivity
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mDatabaseReference;
 
+    private String userID;
+    public static String calorieGoal;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,6 +89,7 @@ public class MainHomePagerActivity extends AppCompatActivity
         // Write a message to the database
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mDatabaseReference = mFirebaseDatabase.getReference().child("Users");
+
 
         // [START auth_state_listener]
         mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -93,6 +103,8 @@ public class MainHomePagerActivity extends AppCompatActivity
                     // User is signed in
                     Log.d("TAG", "onAuthStateChanged:signed_in:" + user.getUid());
 
+                    userID = user.getUid();
+
                     // changing to the account activity
                     //startActivity(new Intent(getApplicationContext(), MainActivity.class));
 
@@ -105,6 +117,41 @@ public class MainHomePagerActivity extends AppCompatActivity
             }
         };
         // [END auth_state_listener]
+
+        mDatabaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+
+//                Map<String, String> userMap = dataSnapshot.getValue(Map.class);
+//
+//                String fullName = userMap.get(userID);
+//
+//                Log.d("TAG", "The users BMI is: " + fullName);
+
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+
+                String BMI = dataSnapshot.child(userID).child("BMI").getValue(String.class);
+                String fullName = dataSnapshot.child(userID).child("Fullname").getValue(String.class);
+                String Birthdate = dataSnapshot.child(userID).child("Birthdate").getValue(String.class);
+                String gender = dataSnapshot.child(userID).child("Gender").getValue(String.class);
+                calorieGoal = dataSnapshot.child(userID).child("Calorie Goal").getValue(String.class);
+
+                Log.d("TAG", "The users BMI is: " + BMI);
+                Log.d("TAG", "The users fullname is: " + fullName);
+                Log.d("TAG", "The users birthdate is: " + Birthdate);
+                Log.d("TAG", "The users gender is: " + gender);
+                Log.d("TAG", "The users calorie goal is: " + calorieGoal);
+
+                Toast.makeText(MainHomePagerActivity.this, "Welcome back " + fullName, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
         setTitle("");
 
@@ -145,8 +192,11 @@ public class MainHomePagerActivity extends AppCompatActivity
 
         startTabataTimer = (Button) findViewById(R.id.tabataTimerBtn);
 
+        testDatabase = (Button) findViewById(R.id.testDatabase);
+
 
     }
+
 
     // log food click
     public void logFood(View view) {

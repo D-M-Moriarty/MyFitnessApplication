@@ -61,4 +61,5 @@
     <string name="log_this">log this</string>
     <string name="title_activity_saved_routes">SavedRoutesActivity</string>
     <string name="title_activity_route_details_maps">Map</string>
+    <string name="calorieGoal">2,280</string>
 </resources>

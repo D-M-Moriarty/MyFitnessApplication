@@ -1,11 +1,14 @@
 package com.darrenmoriarty.myfitnessapp.pageractivities.diet_package;
 
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.darrenmoriarty.myfitnessapp.R;
+import com.darrenmoriarty.myfitnessapp.pageractivities.MainHomePagerActivity;
 
 import java.util.ArrayList;
 
@@ -15,6 +18,7 @@ public class DietDiaryActivity extends AppCompatActivity {
     private ListView lunchListView;
     private ListView dinnerListView;
     private ListView morningSnackListView;
+    private TextView calorieGoalTextView;
 
 
     @Override
@@ -27,6 +31,7 @@ public class DietDiaryActivity extends AppCompatActivity {
         lunchListView = (ListView) findViewById(R.id.lunchListView);
         dinnerListView = (ListView) findViewById(R.id.dinnerListView);
         morningSnackListView = (ListView) findViewById(R.id.morningSnackListView);
+        calorieGoalTextView = (TextView) findViewById(R.id.goalCaloriesTextView);
 
         ArrayList foods = new ArrayList();
 
@@ -40,5 +45,22 @@ public class DietDiaryActivity extends AppCompatActivity {
         morningSnackListView.setAdapter(mArrayAdapter);
 
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        try {
+
+            System.out.println(calorieGoalTextView.getText().toString());
+
+            calorieGoalTextView.setText(calorieGoalTextView.getText().toString());
+        }
+        catch (Exception e) {
+
+            e.printStackTrace();
+
+        }
     }
 }
