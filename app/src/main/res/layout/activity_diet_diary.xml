@@ -217,6 +217,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:onClick="addFood"
                             android:paddingBottom="10dp"
                             android:paddingLeft="10dp"
                             android:paddingTop="10dp"
@@ -267,10 +268,11 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/AddFood2"
+                            android:id="@+id/addLunch"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:onClick="addFood"
                             android:paddingBottom="10dp"
                             android:paddingLeft="10dp"
                             android:paddingTop="10dp"
@@ -321,10 +323,11 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/AddFood3"
+                            android:id="@+id/addDinner"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:onClick="addFood"
                             android:paddingBottom="10dp"
                             android:paddingLeft="10dp"
                             android:paddingTop="10dp"
@@ -376,10 +379,11 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/AddFood4"
+                            android:id="@+id/addMorningSnack"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:onClick="addFood"
                             android:paddingBottom="10dp"
                             android:paddingLeft="10dp"
                             android:paddingTop="10dp"

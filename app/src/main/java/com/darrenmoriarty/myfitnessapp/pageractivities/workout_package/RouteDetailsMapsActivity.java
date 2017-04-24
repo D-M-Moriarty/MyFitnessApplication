@@ -40,6 +40,8 @@ public class RouteDetailsMapsActivity extends FragmentActivity implements OnMapR
         distance = SavedRoutesActivity.distanceS;
         coordinates = SavedRoutesActivity.coordinateS;
 
+        System.out.println(coordinates);
+
         ArrayList<String> arrayList = extractLatLngs(coordinates);
 
         latLngMaker(arrayList);
