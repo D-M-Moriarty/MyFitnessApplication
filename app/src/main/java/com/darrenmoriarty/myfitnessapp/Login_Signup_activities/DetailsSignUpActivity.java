@@ -258,15 +258,21 @@ public class DetailsSignUpActivity extends AppCompatActivity implements View.OnC
 
             if (stonePart.length() > 1) {
                 lbsPart += weight.charAt(10);
-                lbsPart += weight.charAt(11);
+
+                if (Character.isDigit(weight.charAt(11)))
+                    lbsPart += weight.charAt(11);
 
             } else {
 
-                lbsPart += weight.charAt(10);
+                lbsPart += weight.charAt(9);
+
+                if (Character.isDigit(weight.charAt(10)))
+                    lbsPart += weight.charAt(10);
+
 
             }
 
-            if (Character.isDigit(lbsPart.charAt(0)) && Character.isDigit(lbsPart.charAt(1))) {
+            if (lbsPart.length() > 1) {
 
                 int stone = Integer.parseInt(stonePart);
 

@@ -73,9 +73,7 @@ public class DietDiaryActivity extends AppCompatActivity implements View.OnClick
 
         try {
 
-            System.out.println(calorieGoalTextView.getText().toString());
-
-            calorieGoalTextView.setText(calorieGoalTextView.getText().toString());
+            calorieGoalTextView.setText(MainHomePagerActivity.calorieGoal);
         }
         catch (Exception e) {
 

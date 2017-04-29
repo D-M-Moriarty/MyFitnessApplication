@@ -110,7 +110,7 @@ public class SignUpActivity extends AppCompatActivity {
 
 
 
-    private void createAccount(String email, String password) {
+    private void createAccount(final String email, final String password) {
 
         final String name = mUsername.getText().toString().trim();
 
@@ -144,25 +144,43 @@ public class SignUpActivity extends AppCompatActivity {
 
                                 DatabaseReference currentUserDb = mDatabaseReference.child(userId);
 
-                                currentUserDb.child("username").setValue(name);
-                                currentUserDb.child("BMI").setValue(DetailsSignUpActivity.BMIString);
-                                currentUserDb.child("TDEE").setValue(DetailsSignUpActivity.TDEEString);
-                                currentUserDb.child("Gender").setValue(DetailsSignUpActivity.gender);
-                                currentUserDb.child("Height CM").setValue(DetailsSignUpActivity.height);
-                                currentUserDb.child("Weight KG").setValue(DetailsSignUpActivity.weight);
-                                currentUserDb.child("Fullname").setValue(DetailsSignUpActivity.fullName);
-                                currentUserDb.child("Current Activity").setValue(DetailsSignUpActivity.currentActivity);
-                                currentUserDb.child("Weight Goal").setValue(DetailsSignUpActivity.weightGoals);
-                                currentUserDb.child("Calorie Goal").setValue(DetailsSignUpActivity.calorieGoal);
-                                currentUserDb.child("Birthdate").setValue(DetailsSignUpActivity.birthdate);
-                                currentUserDb.child("Fullname").setValue(DetailsSignUpActivity.fullName);
-                                currentUserDb.child("BMR").setValue(DetailsSignUpActivity.BMRString);
+                                MyUser myUser = new MyUser(name, DetailsSignUpActivity.weightGoals, DetailsSignUpActivity.currentActivity,
+                                        DetailsSignUpActivity.gender, DetailsSignUpActivity.birthdate,
+                                        DetailsSignUpActivity.BMRString, DetailsSignUpActivity.BMIString,
+                                        DetailsSignUpActivity.TDEEString, DetailsSignUpActivity.calorieGoal,
+                                        DetailsSignUpActivity.height, DetailsSignUpActivity.weight,
+                                        email, password);
+
+                                try {
+                                    currentUserDb.child("userinfo").setValue(myUser);
+                                }
+                                catch (Exception e) {
+                                    System.out.println("The fucking error!!!!");
+                                    e.printStackTrace();
+                                }
+
+//                                currentUserDb.child("username").setValue(name);
+//                                currentUserDb.child("BMI").setValue(DetailsSignUpActivity.BMIString);
+//                                currentUserDb.child("TDEE").setValue(DetailsSignUpActivity.TDEEString);
+//                                currentUserDb.child("Gender").setValue(DetailsSignUpActivity.gender);
+//                                currentUserDb.child("Height CM").setValue(DetailsSignUpActivity.height);
+//                                currentUserDb.child("Weight KG").setValue(DetailsSignUpActivity.weight);
+//                                currentUserDb.child("Fullname").setValue(DetailsSignUpActivity.fullName);
+//                                currentUserDb.child("Current Activity").setValue(DetailsSignUpActivity.currentActivity);
+//                                currentUserDb.child("Weight Goal").setValue(DetailsSignUpActivity.weightGoals);
+//                                currentUserDb.child("Calorie Goal").setValue(DetailsSignUpActivity.calorieGoal);
+//                                currentUserDb.child("Birthdate").setValue(DetailsSignUpActivity.birthdate);
+//                                currentUserDb.child("Fullname").setValue(DetailsSignUpActivity.fullName);
+//                                currentUserDb.child("BMR").setValue(DetailsSignUpActivity.BMRString);
+
 
 
                                 mProgressDialog.dismiss();
 
                                 Intent mainIntent = new Intent(SignUpActivity.this, MainHomePagerActivity.class);
                                 startActivity(mainIntent);
+
+
 
                             }
 

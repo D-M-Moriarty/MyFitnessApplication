@@ -22,6 +22,14 @@
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintRight_creator="1"/>
 
+    <View
+        android:layout_width="348dp"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+        app:layout_constraintLeft_toLeftOf="@+id/view"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="115dp"/>
+
     <TextView
         android:id="@+id/activityTextView"
         android:layout_width="wrap_content"
@@ -46,11 +54,23 @@
         app:layout_constraintTop_toBottomOf="@+id/activityTextView"
         android:layout_marginStart="1dp"/>
 
+    <View
+        android:layout_width="348dp"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+        android:id="@+id/view"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="68dp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+
     <TextView
         android:id="@+id/durationHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="77dp"
+        android:layout_marginLeft="81dp"
         android:layout_marginTop="152dp"
         android:text="Duration"
         android:textSize="18sp"
@@ -67,7 +87,8 @@
         android:textSize="14sp"
         app:layout_constraintTop_toBottomOf="@+id/durationHeader"
         android:layout_marginLeft="100dp"
-        app:layout_constraintLeft_toLeftOf="parent"/>
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginStart="100dp"/>
 
     <TextView
         android:id="@+id/distanceHeader"
@@ -77,7 +98,7 @@
         android:textSize="18sp"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="152dp"
-        android:layout_marginRight="77dp"
+        android:layout_marginRight="70dp"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginEnd="70dp"/>
 
@@ -89,7 +110,8 @@
         android:layout_marginTop="31dp"
         app:layout_constraintTop_toBottomOf="@+id/distanceHeader"
         android:layout_marginRight="87dp"
-        app:layout_constraintRight_toRightOf="parent"/>
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginEnd="87dp"/>
 
     <android.support.constraint.Guideline
         android:layout_width="wrap_content"

@@ -1,4 +1,5 @@
 <android.support.design.widget.CoordinatorLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:android="http://schemas.android.com/apk/res/android">
@@ -44,16 +45,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:onClick="logFood"
-                    android:text="View Goals"/>
+                    android:text="View Goals"
+                    android:visibility="invisible"/>
 
                 <ImageView
-                    android:id="@+id/imageView3"
+                    android:id="@+id/goalsImage"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clickable="true"
                     android:fitsSystemWindows="false"
-                    android:onClick="Track Run"
-                    app:srcCompat="@drawable/running"/>
+                    android:scaleType="centerCrop"
+                    app:srcCompat="@drawable/scale"/>
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
@@ -70,12 +72,20 @@
                 tools:layout_constraintLeft_creator="1"
                 tools:layout_constraintRight_creator="1">
 
+                <ImageView
+                    android:id="@+id/waterImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scaleType="centerCrop"
+                    app:srcCompat="@drawable/water"/>
+
                 <Button
                     android:id="@+id/testDatabase"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:onClick="testDatabase"
-                    android:text="Test Database"/>
+                    android:text="Test Database"
+                    android:visibility="invisible"/>
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
@@ -93,11 +103,19 @@
                 tools:layout_constraintLeft_creator="1"
                 tools:layout_constraintRight_creator="1">
 
+                <ImageView
+                    android:id="@+id/weightImage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="centerCrop"
+                    app:srcCompat="@drawable/weight"/>
+
                 <Button
                     android:id="@+id/viewWorkoutsBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="View Workouts"/>
+                    android:text="View Workouts"
+                    android:visibility="invisible"/>
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
@@ -115,11 +133,19 @@
                 tools:layout_constraintLeft_creator="1"
                 tools:layout_constraintRight_creator="1">
 
+                <ImageView
+                    android:id="@+id/subscriptionImage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="centerCrop"
+                    app:srcCompat="@drawable/subscription"/>
+
                 <Button
                     android:id="@+id/VO2MaxBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="View VO2 Max"/>
+                    android:text="View VO2 Max"
+                    android:visibility="invisible"/>
             </android.support.v7.widget.CardView>
 
         </LinearLayout>

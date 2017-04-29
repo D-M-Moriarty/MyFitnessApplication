@@ -57,12 +57,14 @@
         <activity
             android:name=".pageractivities.workout_package.RunningTracker"
             android:configChanges="orientation|screenSize"
+            android:launchMode="singleTask"
             android:label="@string/title_activity_running_tracker">
         </activity>
         <activity
             android:name=".pageractivities.MainHomePagerActivity"
             android:label="@string/title_activity_main_home_pager"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:configChanges="orientation|screenSize|keyboardHidden">
         </activity>
         <activity
             android:name=".NavigationDrawerActivity"
