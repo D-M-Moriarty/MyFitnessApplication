@@ -241,7 +241,6 @@ public class RunningTracker extends FragmentActivity implements OnMapReadyCallba
                 resumeButton.setVisibility(View.INVISIBLE);
 
 
-
                 return true;
             }
         });

@@ -75,7 +75,8 @@
         </activity>
         <activity
             android:name=".pageractivities.workout_package.TabataMainActivity"
-            android:configChanges="orientation|screenSize">
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".pageractivities.diet_package.FoodSearchActivity"
@@ -92,14 +93,10 @@
             android:name=".pageractivities.workout_package.RouteDetailsMapsActivity"
             android:label="@string/title_activity_route_details_maps">
         </activity>
-        <activity android:name=".pageractivities.diet_package.DietDiaryActivity">
+        <activity android:name=".pageractivities.diet_package.DietDiaryActivity"
+                  android:configChanges="orientation|screenSize">
         </activity>
         <activity android:name=".pageractivities.goals_package.UserGoalsActivity">
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN"/>-->
-
-                <!--<category android:name="android.intent.category.LAUNCHER"/>-->
-            <!--</intent-filter>-->
         </activity>
     </application>
 

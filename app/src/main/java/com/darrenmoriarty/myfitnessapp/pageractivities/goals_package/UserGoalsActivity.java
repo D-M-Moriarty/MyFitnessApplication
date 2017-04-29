@@ -34,9 +34,9 @@ public class UserGoalsActivity extends AppCompatActivity {
 
         // weight arraylist values
         weightGoalsArrayList = new ArrayList<>();
-        weightGoalsArrayList.add("Starting Weight - \t" + mMyUser.weight);
-        weightGoalsArrayList.add("Current Weight - \t" + mMyUser.weight);
-        weightGoalsArrayList.add("Goal Weight - \t" + mMyUser.weightGoal);
+        weightGoalsArrayList.add("Starting Weight - \t" + mMyUser.weight + "Kg");
+        weightGoalsArrayList.add("Current Weight - \t" + mMyUser.weight + "Kg");
+        weightGoalsArrayList.add("Weight Goal - \t" + mMyUser.weightGoal);
         weightGoalsArrayList.add("Activity Level - \t" + mMyUser.currentActivity);
 
         mArrayAdapterWeight = new ArrayAdapter(this, android.R.layout.simple_list_item_1, weightGoalsArrayList);

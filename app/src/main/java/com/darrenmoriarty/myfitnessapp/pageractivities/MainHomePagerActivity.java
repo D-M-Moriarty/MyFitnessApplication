@@ -260,13 +260,6 @@ public class MainHomePagerActivity extends AppCompatActivity
         email = (TextView)header.findViewById(R.id.nav_Email);
 
 
-
-
-        // find the button to start tracking the run
-        startTracking = (Button) findViewById(R.id.startRunTrackBtn);
-
-        startTabataTimer = (Button) findViewById(R.id.tabataTimerBtn);
-
     }
 
     // view goals
@@ -287,6 +280,12 @@ public class MainHomePagerActivity extends AppCompatActivity
 
         startActivity(new Intent(MainHomePagerActivity.this, DietDiaryActivity.class));
 
+    }
+
+    // start the running tracker activity
+    public void startTracking(View view) {
+
+        startActivity(new Intent(MainHomePagerActivity.this, RunningTracker.class));
     }
 
     // starting the tabata timer activity
@@ -383,12 +382,6 @@ public class MainHomePagerActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
-    }
-
-    // start the running tracker activity
-    public void startTracking(View view) {
-
-        startActivity(new Intent(MainHomePagerActivity.this, RunningTracker.class));
     }
 
 

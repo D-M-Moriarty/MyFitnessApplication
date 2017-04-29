@@ -57,7 +57,7 @@ public class RecordFinishActivity extends AppCompatActivity {
         System.out.println("The distance " + distance);
         System.out.println("The duration " + durationS);
 
-        String dist = Double.toString(distance);
+        String dist = Double.toString(Double.parseDouble(String.format(Locale.UK, "%.2f",distance)));
 
         // TODO fix the issue with the string format of the double value
         //dist = String.format(Locale.UK, "%.2f m", dist);
@@ -66,8 +66,8 @@ public class RecordFinishActivity extends AppCompatActivity {
 
         System.out.println(points);
 
-        durationText.setText(durationS);
-        distanceText.setText(dist);
+        durationText.setText(durationS + " min");
+        distanceText.setText(dist + " km");
 
         // save the workout details
         saveWorkoutButton.setOnClickListener(new View.OnClickListener() {

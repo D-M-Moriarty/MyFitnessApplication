@@ -36,6 +36,7 @@ public class FoodSearchActivity extends AppCompatActivity {
     private EditText foodSearchEditText;
     private ListView foodList;
     private Intent nextScreen;
+    private String meal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +45,21 @@ public class FoodSearchActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setTitle("");
+
+        try {
+
+            Bundle extras = getIntent().getExtras();
+
+            if (extras != null) {
+
+                meal = extras.getString("meal");
+
+            }
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
 
 
         foodList = (ListView) findViewById(R.id.foodListView);
@@ -211,12 +227,17 @@ public class FoodSearchActivity extends AppCompatActivity {
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
 
-                        // creating the new task to download the current items details
-                        DownloadNDBNO downloadNDBNO = new DownloadNDBNO();
-                        downloadNDBNO.execute("https://api.nal.usda.gov/ndb/nutrients/?format=json&api_key=n9S63MmDB62TayeDC9x1y8gxYDoQyTU3PIG6jQ9f&nutrients=205&nutrients=203&nutrients=204&nutrients=208&nutrients=269&gm&ndbno=" + ndbnos.get(position));
+                        try {
+                            // creating the new task to download the current items details
+                            DownloadNDBNO downloadNDBNO = new DownloadNDBNO();
+                            downloadNDBNO.execute("https://api.nal.usda.gov/ndb/nutrients/?format=json&api_key=n9S63MmDB62TayeDC9x1y8gxYDoQyTU3PIG6jQ9f&nutrients=205&nutrients=203&nutrients=204&nutrients=208&nutrients=269&gm&ndbno=" + ndbnos.get(position));
 
-                        nextScreen.putExtra("name", names.get(position));
+                            nextScreen.putExtra("name", names.get(position));
 
+                        }
+                        catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                 });
 
@@ -382,8 +403,11 @@ public class FoodSearchActivity extends AppCompatActivity {
 
                 nextScreen.putExtra("nutrientArray", nutrientArray);
                 nextScreen.putExtra("valueArray", valueArray);
+                nextScreen.putExtra("meal", meal);
 
                 startActivity(nextScreen);
+
+                finish();
 
 
             } catch (JSONException e) {

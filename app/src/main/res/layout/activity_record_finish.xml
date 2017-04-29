@@ -28,7 +28,8 @@
         android:background="@android:color/darker_gray"
         app:layout_constraintLeft_toLeftOf="@+id/view"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="115dp"/>
+        android:layout_marginTop="115dp"
+        />
 
     <TextView
         android:id="@+id/activityTextView"
@@ -47,7 +48,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="1dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="47dp"
         android:text="Run"
         android:textSize="18sp"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -55,7 +56,7 @@
         android:layout_marginStart="1dp"/>
 
     <View
-        android:layout_width="348dp"
+        android:layout_width="0dp"
         android:layout_height="1dp"
         android:background="@android:color/darker_gray"
         android:id="@+id/view"
@@ -64,7 +65,9 @@
         android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"/>
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"/>
 
     <TextView
         android:id="@+id/durationHeader"
@@ -112,6 +115,21 @@
         android:layout_marginRight="87dp"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginEnd="87dp"/>
+
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+        android:id="@+id/view3"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="255dp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"/>
 
     <android.support.constraint.Guideline
         android:layout_width="wrap_content"

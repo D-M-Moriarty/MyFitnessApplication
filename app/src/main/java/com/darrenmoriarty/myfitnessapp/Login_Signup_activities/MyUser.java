@@ -1,6 +1,7 @@
 package com.darrenmoriarty.myfitnessapp.Login_Signup_activities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * Created by Darren Moriarty on 06/04/2017.

@@ -51,6 +51,8 @@ public class AddFoodActivity extends AppCompatActivity implements AdapterView.On
     private Button logThisButton;
     private Button logMoreButton;
 
+    private String meal;
+
     private boolean divideBy100 = false;
 
     // TODO fix the issue with selecting 2 radio buttons
@@ -63,6 +65,22 @@ public class AddFoodActivity extends AppCompatActivity implements AdapterView.On
 
         logThisButton = (Button) findViewById(R.id.logFoodButton);
         logMoreButton = (Button) findViewById(R.id.logAddMoreButton);
+
+        try {
+
+            Bundle extras = getIntent().getExtras();
+
+            if (extras != null) {
+
+                meal = extras.getString("meal");
+
+                System.out.println("Add food activity " + meal);
+            }
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
 
 
         values = (ArrayList<String>) getIntent().getSerializableExtra("valueArray");
@@ -208,8 +226,11 @@ public class AddFoodActivity extends AppCompatActivity implements AdapterView.On
 
         intent.putExtra("FoodName", name);
         intent.putExtra("Calories", Integer.toString(energyInt));
+        intent.putExtra("meal", meal);
 
         startActivity(intent);
+
+        finish();
 
 
     }

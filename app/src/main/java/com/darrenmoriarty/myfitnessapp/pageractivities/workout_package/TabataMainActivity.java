@@ -1,5 +1,6 @@
 package com.darrenmoriarty.myfitnessapp.pageractivities.workout_package;
 
+import android.content.res.Configuration;
 import android.media.MediaPlayer;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -100,6 +101,18 @@ public class TabataMainActivity extends AppCompatActivity implements View.OnClic
         // TODO figure out how to change the progress bar
 
 
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+
+        super.onConfigurationChanged(newConfig);
+
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            setContentView(R.layout.activity_tabata_main);
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+            setContentView(R.layout.activity_tabata_main);
+        }
     }
 
     public void skipForward() {

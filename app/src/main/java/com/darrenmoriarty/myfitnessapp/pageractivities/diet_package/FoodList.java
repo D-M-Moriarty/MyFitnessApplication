@@ -8,5 +8,10 @@ import java.util.ArrayList;
 
 public class FoodList {
 
-    public static ArrayList<String> foodList = new ArrayList<>();
+    public static ArrayList<String> breakfastList = new ArrayList<>();
+    public static ArrayList<String> lunchList = new ArrayList<>();
+    public static ArrayList<String> dinnerList = new ArrayList<>();
+    public static ArrayList<String> morningSnackList = new ArrayList<>();
+
+    public static Integer calories = 0;
 }
