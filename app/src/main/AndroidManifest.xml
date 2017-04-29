@@ -57,14 +57,14 @@
         <activity
             android:name=".pageractivities.workout_package.RunningTracker"
             android:configChanges="orientation|screenSize"
-            android:launchMode="singleTask"
-            android:label="@string/title_activity_running_tracker">
+            android:label="@string/title_activity_running_tracker"
+            android:launchMode="singleTask">
         </activity>
         <activity
             android:name=".pageractivities.MainHomePagerActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:label="@string/title_activity_main_home_pager"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:configChanges="orientation|screenSize|keyboardHidden">
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
             android:name=".NavigationDrawerActivity"
@@ -93,6 +93,13 @@
             android:label="@string/title_activity_route_details_maps">
         </activity>
         <activity android:name=".pageractivities.diet_package.DietDiaryActivity">
+        </activity>
+        <activity android:name=".pageractivities.goals_package.UserGoalsActivity">
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN"/>-->
+
+                <!--<category android:name="android.intent.category.LAUNCHER"/>-->
+            <!--</intent-filter>-->
         </activity>
     </application>
 

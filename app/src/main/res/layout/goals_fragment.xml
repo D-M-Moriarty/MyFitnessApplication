@@ -54,6 +54,7 @@
                     android:layout_height="wrap_content"
                     android:clickable="true"
                     android:fitsSystemWindows="false"
+                    android:onClick="viewGoals"
                     android:scaleType="centerCrop"
                     app:srcCompat="@drawable/scale"/>
             </android.support.v7.widget.CardView>

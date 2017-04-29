@@ -1,6 +1,7 @@
 package com.darrenmoriarty.myfitnessapp.pageractivities.diet_package;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Rect;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ListView;
@@ -46,6 +48,9 @@ public class AddFoodActivity extends AppCompatActivity implements AdapterView.On
     private double carbDouble;
     private int qtyMultiplier;
 
+    private Button logThisButton;
+    private Button logMoreButton;
+
     private boolean divideBy100 = false;
 
     // TODO fix the issue with selecting 2 radio buttons
@@ -55,6 +60,9 @@ public class AddFoodActivity extends AppCompatActivity implements AdapterView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_food);
+
+        logThisButton = (Button) findViewById(R.id.logFoodButton);
+        logMoreButton = (Button) findViewById(R.id.logAddMoreButton);
 
 
         values = (ArrayList<String>) getIntent().getSerializableExtra("valueArray");
@@ -190,6 +198,20 @@ public class AddFoodActivity extends AppCompatActivity implements AdapterView.On
             }
         }
         return super.dispatchTouchEvent( event );
+    }
+
+    // log the selected food
+    public void logThisFood(View view) {
+
+
+        Intent intent = new Intent(getApplicationContext(), DietDiaryActivity.class);
+
+        intent.putExtra("FoodName", name);
+        intent.putExtra("Calories", Integer.toString(energyInt));
+
+        startActivity(intent);
+
+
     }
 
 

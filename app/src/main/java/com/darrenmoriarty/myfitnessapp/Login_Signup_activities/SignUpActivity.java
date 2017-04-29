@@ -144,7 +144,7 @@ public class SignUpActivity extends AppCompatActivity {
 
                                 DatabaseReference currentUserDb = mDatabaseReference.child(userId);
 
-                                MyUser myUser = new MyUser(name, DetailsSignUpActivity.weightGoals, DetailsSignUpActivity.currentActivity,
+                                MyUser myUser = new MyUser(name, DetailsSignUpActivity.fullName, DetailsSignUpActivity.weightGoals, DetailsSignUpActivity.currentActivity,
                                         DetailsSignUpActivity.gender, DetailsSignUpActivity.birthdate,
                                         DetailsSignUpActivity.BMRString, DetailsSignUpActivity.BMIString,
                                         DetailsSignUpActivity.TDEEString, DetailsSignUpActivity.calorieGoal,

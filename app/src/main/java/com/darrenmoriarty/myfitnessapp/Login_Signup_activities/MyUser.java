@@ -1,12 +1,15 @@
 package com.darrenmoriarty.myfitnessapp.Login_Signup_activities;
 
+import java.io.Serializable;
+
 /**
  * Created by Darren Moriarty on 06/04/2017.
  */
 
-public class MyUser {
+public class MyUser implements Serializable{
 
     public String username;
+    public String fullname;
     public String weightGoal;
     public String currentActivity;
     public String gender;
@@ -24,7 +27,7 @@ public class MyUser {
 
     }
 
-    public MyUser(String username, String weightGoal, String currentActivity, String gender, String DOB, String BMR, String BMI, String TDEE, String calorieGoal, String height, String weight, String emailAddress, String password) {
+    public MyUser(String username, String fullname, String weightGoal, String currentActivity, String gender, String DOB, String BMR, String BMI, String TDEE, String calorieGoal, String height, String weight, String emailAddress, String password) {
         this.username = username;
         this.weightGoal = weightGoal;
         this.currentActivity = currentActivity;
@@ -146,20 +149,21 @@ public class MyUser {
 
     @Override
     public String toString() {
-        return "MyUser{" +
+        return "MyUser{" + "\n" +
                 "username='" + username + '\'' +
-                ", weightGoal='" + weightGoal + '\'' +
-                ", currentActivity='" + currentActivity + '\'' +
-                ", gender='" + gender + '\'' +
-                ", DOB='" + DOB + '\'' +
-                ", BMR='" + BMR + '\'' +
-                ", BMI='" + BMI + '\'' +
-                ", TDEE='" + TDEE + '\'' +
-                ", calorieGoal='" + calorieGoal + '\'' +
-                ", height='" + height + '\'' +
-                ", weight='" + weight + '\'' +
-                ", emailAddress='" + emailAddress + '\'' +
-                ", password='" + password + '\'' +
+                ", \nfullname='" + fullname + '\'' +
+                ", \nweightGoal='" + weightGoal + '\'' +
+                ", \ncurrentActivity='" + currentActivity + '\'' +
+                ", \ngender='" + gender + '\'' +
+                ", \nDOB='" + DOB + '\'' +
+                ", \nBMR='" + BMR + '\'' +
+                ", \nBMI='" + BMI + '\'' +
+                ", \nTDEE='" + TDEE + '\'' +
+                ", \ncalorieGoal='" + calorieGoal + '\'' +
+                ", \nheight='" + height + '\'' +
+                ", \nweight='" + weight + '\'' +
+                ", \nemailAddress='" + emailAddress + '\'' +
+                ", \npassword='" + password + '\'' +
                 '}';
     }
 }

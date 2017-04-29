@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -35,6 +36,33 @@ public class DietDiaryActivity extends AppCompatActivity implements View.OnClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_diet_diary);
 
+        ArrayList foods = new ArrayList();
+
+        try {
+
+            Bundle extras = getIntent().getExtras();
+
+            System.out.println("Extras " + extras);
+
+            System.out.println("Inside the try");
+            if (extras != null) {
+                String name = extras.getString("FoodName");
+                //The key argument here must match that used in the other activity
+
+                String calories = extras.getString("Calories");
+
+                System.out.println("The food name is " + name);
+
+                FoodList.foodList.add(name);
+
+            }
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        ArrayAdapter mArrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, FoodList.foodList);
 
         breakfastListView = (ListView) findViewById(R.id.breakfastListView);
         lunchListView = (ListView) findViewById(R.id.lunchListView);
@@ -48,16 +76,18 @@ public class DietDiaryActivity extends AppCompatActivity implements View.OnClick
         addDinnerTextView = (TextView) findViewById(R.id.addDinner);
         addMorningSnackTextView = (TextView) findViewById(R.id.addMorningSnack);
 
+        //System.out.println(breakfastListView.get);
+
+        // probably not a great way
+        ViewGroup.LayoutParams params = breakfastListView.getLayoutParams();
+        params.height *= FoodList.foodList.size();
+        breakfastListView.setLayoutParams(params);
+        breakfastListView.requestLayout();
+
         addBreakfastTextView.setOnClickListener(this);
         addLunchTextView.setOnClickListener(this);
         addDinnerTextView.setOnClickListener(this);
         addMorningSnackTextView.setOnClickListener(this);
-
-        ArrayList foods = new ArrayList();
-
-        foods.add("White Bread");
-
-        ArrayAdapter mArrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, foods);
 
         breakfastListView.setAdapter(mArrayAdapter);
         lunchListView.setAdapter(mArrayAdapter);

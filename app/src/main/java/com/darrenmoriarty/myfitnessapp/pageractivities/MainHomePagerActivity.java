@@ -23,6 +23,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.darrenmoriarty.myfitnessapp.Login_Signup_activities.MyUser;
@@ -32,6 +33,7 @@ import com.darrenmoriarty.myfitnessapp.pageractivities.diet_package.DietDiaryAct
 import com.darrenmoriarty.myfitnessapp.pageractivities.diet_package.DietTab;
 import com.darrenmoriarty.myfitnessapp.pageractivities.diet_package.FoodSearchActivity;
 import com.darrenmoriarty.myfitnessapp.pageractivities.goals_package.GoalsTab;
+import com.darrenmoriarty.myfitnessapp.pageractivities.goals_package.UserGoalsActivity;
 import com.darrenmoriarty.myfitnessapp.pageractivities.workout_package.RunningTracker;
 import com.darrenmoriarty.myfitnessapp.pageractivities.workout_package.TabataSettingActivity;
 import com.darrenmoriarty.myfitnessapp.pageractivities.workout_package.WorkoutsTab;
@@ -44,6 +46,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.Map;
+
+import static android.R.attr.name;
+import static android.R.attr.start;
+import static com.darrenmoriarty.myfitnessapp.R.string.email;
 
 public class MainHomePagerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -65,6 +71,9 @@ public class MainHomePagerActivity extends AppCompatActivity
     private Button startTracking;
     private Button startTabataTimer;
     private Button testDatabase;
+    private View header;
+    private TextView name;
+    private TextView email;
 
     // [START declare_auth]
     private FirebaseAuth mAuth;
@@ -80,6 +89,7 @@ public class MainHomePagerActivity extends AppCompatActivity
     private String userID;
     public static String calorieGoal;
     public String fullname;
+    private MyUser myUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,14 +136,23 @@ public class MainHomePagerActivity extends AppCompatActivity
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                MyUser myUser = dataSnapshot.child(userID).child("userinfo").getValue(MyUser.class);
+                myUser = dataSnapshot.child(userID).child("userinfo").getValue(MyUser.class);
                 System.out.println(myUser.toString());
 
-                System.out.println(myUser.username);
+                calorieGoal = myUser.calorieGoal;
 
-                String value = dataSnapshot.child(userID).child("userinfo").child("username").getValue(String.class);
+                // drawer items
+                name.setText(myUser.username);
+                email.setText(myUser.emailAddress);
+                // end drawer items
 
-                System.out.println(value);
+                Toast.makeText(MainHomePagerActivity.this, "Hey Good to see you " + myUser.username, Toast.LENGTH_SHORT).show();
+
+                //System.out.println(myUser.username);
+
+                //String value = dataSnapshot.child(userID).child("userinfo").child("username").getValue(String.class);
+
+                //System.out.println(value);
 
 
 //                Map<String, String> userMap = dataSnapshot.getValue(Map.class);
@@ -144,42 +163,40 @@ public class MainHomePagerActivity extends AppCompatActivity
 
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
+//
+//                String BMI = dataSnapshot.child(userID).child("userinfo").child("BMI").getValue(String.class);
+//                fullname = dataSnapshot.child(userID).child("userinfo").child("Fullname").getValue(String.class);
+//                String Birthdate = dataSnapshot.child(userID).child("userinfo").child("Birthdate").getValue(String.class);
+//                String gender = dataSnapshot.child(userID).child("userinfo").child("Gender").getValue(String.class);
+//                calorieGoal = dataSnapshot.child(userID).child("userinfo").child("Calorie Goal").getValue(String.class);
+//
+//                String username = dataSnapshot.child(userID).child("userinfo").child("username").getValue(String.class);
+//                String weightGoal = dataSnapshot.child(userID).child("userinfo").child("Weight Goal").getValue(String.class);
+//                String currentActivity = dataSnapshot.child(userID).child("userinfo").child("Current Activity").getValue(String.class);
+//                String DOB = dataSnapshot.child(userID).child("userinfo").child("Birthdate").getValue(String.class);
+//                String BMR = dataSnapshot.child(userID).child("userinfo").child("BMR").getValue(String.class);
+//                String TDEE = dataSnapshot.child(userID).child("userinfo").child("TDEE").getValue(String.class);
+//                String height = dataSnapshot.child(userID).child("userinfo").child("Height CM").getValue(String.class);
+//                String weight = dataSnapshot.child(userID).child("userinfo").child("Weight KG").getValue(String.class);
+//
+//
+//
+//                Log.d("TAG", "The users BMI is: " + BMI);
+//                Log.d("TAG", "The users fullname is: " + fullname);
+//                Log.d("TAG", "The users Birthdate is: " + Birthdate);
+//                Log.d("TAG", "The users weightGoal is: " + weightGoal);
+//                Log.d("TAG", "The users gender is: " + gender);
+//                Log.d("TAG", "The users calorieGoal Goal is: " + calorieGoal);
+//                Log.d("TAG", "The users username is: " + username);
+//                Log.d("TAG", "The users birthdate is: " + Birthdate);
+//                Log.d("TAG", "The users current Activity is: " + currentActivity);
+//                Log.d("TAG", "The users DOB is: " + DOB);
+//                Log.d("TAG", "The users BMR is: " + BMR);
+//                Log.d("TAG", "The users TDEE is: " + TDEE);
+//                Log.d("TAG", "The users height in cm is: " + height);
+//                Log.d("TAG", "The users weight in kg  is: " + weight);
 
-                String BMI = dataSnapshot.child(userID).child("userinfo").child("BMI").getValue(String.class);
-                fullname = dataSnapshot.child(userID).child("userinfo").child("Fullname").getValue(String.class);
-                String Birthdate = dataSnapshot.child(userID).child("userinfo").child("Birthdate").getValue(String.class);
-                String gender = dataSnapshot.child(userID).child("userinfo").child("Gender").getValue(String.class);
-                calorieGoal = dataSnapshot.child(userID).child("userinfo").child("Calorie Goal").getValue(String.class);
 
-                String username = dataSnapshot.child(userID).child("userinfo").child("username").getValue(String.class);
-                String weightGoal = dataSnapshot.child(userID).child("userinfo").child("Weight Goal").getValue(String.class);
-                String currentActivity = dataSnapshot.child(userID).child("userinfo").child("Current Activity").getValue(String.class);
-                String DOB = dataSnapshot.child(userID).child("userinfo").child("Birthdate").getValue(String.class);
-                String BMR = dataSnapshot.child(userID).child("userinfo").child("BMR").getValue(String.class);
-                String TDEE = dataSnapshot.child(userID).child("userinfo").child("TDEE").getValue(String.class);
-                String height = dataSnapshot.child(userID).child("userinfo").child("Height CM").getValue(String.class);
-                String weight = dataSnapshot.child(userID).child("userinfo").child("Weight KG").getValue(String.class);
-
-
-
-                Log.d("TAG", "The users BMI is: " + BMI);
-                Log.d("TAG", "The users fullname is: " + fullname);
-                Log.d("TAG", "The users Birthdate is: " + Birthdate);
-                Log.d("TAG", "The users weightGoal is: " + weightGoal);
-                Log.d("TAG", "The users gender is: " + gender);
-                Log.d("TAG", "The users calorieGoal Goal is: " + calorieGoal);
-                Log.d("TAG", "The users username is: " + username);
-                Log.d("TAG", "The users birthdate is: " + Birthdate);
-                Log.d("TAG", "The users current Activity is: " + currentActivity);
-                Log.d("TAG", "The users DOB is: " + DOB);
-                Log.d("TAG", "The users BMR is: " + BMR);
-                Log.d("TAG", "The users TDEE is: " + TDEE);
-                Log.d("TAG", "The users height in cm is: " + height);
-                Log.d("TAG", "The users weight in kg  is: " + weight);
-
-                calorieGoal = myUser.calorieGoal;
-
-                Toast.makeText(MainHomePagerActivity.this, "Welcome back " + myUser.username, Toast.LENGTH_SHORT).show();
 
                 //
 //                MyUser.username = username;
@@ -237,12 +254,25 @@ public class MainHomePagerActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        header = navigationView.getHeaderView(0);
+/*View view=navigationView.inflateHeaderView(R.layout.nav_header_main);*/
+        name = (TextView)header.findViewById(R.id.nav_username);
+        email = (TextView)header.findViewById(R.id.nav_Email);
+
+
+
+
         // find the button to start tracking the run
         startTracking = (Button) findViewById(R.id.startRunTrackBtn);
 
         startTabataTimer = (Button) findViewById(R.id.tabataTimerBtn);
 
+    }
 
+    // view goals
+    public void viewGoals(View view) {
+
+        startActivity(new Intent(MainHomePagerActivity.this, UserGoalsActivity.class).putExtra("MyUser", myUser));
 
     }
 
