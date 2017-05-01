@@ -62,4 +62,7 @@
     <string name="title_activity_saved_routes">SavedRoutesActivity</string>
     <string name="title_activity_route_details_maps">Map</string>
     <string name="calorieGoal">2,280</string>
+
+    <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+
 </resources>

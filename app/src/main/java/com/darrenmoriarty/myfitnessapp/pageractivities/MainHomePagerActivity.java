@@ -37,6 +37,9 @@ import com.darrenmoriarty.myfitnessapp.pageractivities.goals_package.UserGoalsAc
 import com.darrenmoriarty.myfitnessapp.pageractivities.workout_package.RunningTracker;
 import com.darrenmoriarty.myfitnessapp.pageractivities.workout_package.TabataSettingActivity;
 import com.darrenmoriarty.myfitnessapp.pageractivities.workout_package.WorkoutsTab;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -75,6 +78,7 @@ public class MainHomePagerActivity extends AppCompatActivity
     private TextView name;
     private TextView email;
 
+
     // [START declare_auth]
     private FirebaseAuth mAuth;
     // [START declare_auth_listener]
@@ -95,6 +99,7 @@ public class MainHomePagerActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_home_pager);
+
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -240,7 +245,7 @@ public class MainHomePagerActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "Barcode Scanner Not Implemented!!", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
@@ -255,9 +260,10 @@ public class MainHomePagerActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         header = navigationView.getHeaderView(0);
-/*View view=navigationView.inflateHeaderView(R.layout.nav_header_main);*/
         name = (TextView)header.findViewById(R.id.nav_username);
         email = (TextView)header.findViewById(R.id.nav_Email);
+
+
 
 
     }
