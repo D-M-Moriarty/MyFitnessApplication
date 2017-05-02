@@ -13,6 +13,7 @@ import android.os.Build;
 import android.os.SystemClock;
 import android.support.annotation.IdRes;
 import android.support.annotation.RequiresApi;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -27,6 +28,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -42,6 +44,7 @@ import java.util.Locale;
 import static com.darrenmoriarty.myfitnessapp.R.id.birthdateEditText;
 import static com.darrenmoriarty.myfitnessapp.R.id.breakfastRadioButton;
 import static com.darrenmoriarty.myfitnessapp.R.id.femaleRadioButton;
+import static com.darrenmoriarty.myfitnessapp.R.id.genderRadioGroup;
 import static com.darrenmoriarty.myfitnessapp.R.id.heightEditText;
 import static com.darrenmoriarty.myfitnessapp.R.id.maleRadioButton;
 import static com.darrenmoriarty.myfitnessapp.R.id.setTextView;
@@ -89,6 +92,11 @@ public class DetailsSignUpActivity extends AppCompatActivity implements View.OnC
     private boolean isHeightField = false;
     private boolean isKg;
 
+    private RadioButton maleRadio;
+    private RadioButton femaleRadio;
+
+    private String usersAgeString;
+
 
 
     @Override
@@ -120,6 +128,8 @@ public class DetailsSignUpActivity extends AppCompatActivity implements View.OnC
         mGenderGroup = (RadioGroup) findViewById(R.id.genderRadioGroup);
         mWeightEditText = (EditText) findViewById(R.id.weightEditText);
         mHeightEditText = (EditText) findViewById(R.id.heightEditText);
+        maleRadio = (RadioButton) findViewById(R.id.maleRadioButton);
+        femaleRadio = (RadioButton) findViewById(R.id.femaleRadioButton);
 
         mBirthdayField.setOnClickListener(this);
         mWeightEditText.setOnClickListener(this);
@@ -449,23 +459,36 @@ public class DetailsSignUpActivity extends AppCompatActivity implements View.OnC
 
     public void toActivate(View view) {
 
-        int realWeight = Integer.parseInt(convertWeighttoKg(mWeightEditText.getText().toString()));
-        int realHeight = Integer.parseInt(convertHeighttoCm(mHeightEditText.getText().toString()));
+        int realWeight = 0;
+        int realHeight = 0;
+
+        if (Character.isDigit(mWeightEditText.getText().toString().charAt(0)) &&
+                Character.isDigit(mHeightEditText.getText().toString().charAt(0))) {
+            realWeight = Integer.parseInt(convertWeighttoKg(mWeightEditText.getText().toString()));
+            realHeight = Integer.parseInt(convertHeighttoCm(mHeightEditText.getText().toString()));
+        }
+
 
         System.out.println(realHeight + " real height");
         System.out.println(realWeight + " real weight");
 
-        fullName = mFullNameField.getText().toString().trim();
-        birthdate = mBirthdayField.getText().toString().trim();
-        height = convertHeighttoCm(mHeightEditText.getText().toString());
-        weight = convertWeighttoKg(mWeightEditText.getText().toString());
-        int BMR = calcBMR(realWeight, realHeight, 25, gender);
-        BMRString = Integer.toString(BMR);
-        int BMI = calcBMI(realWeight, realHeight);
-        BMIString = Integer.toString(BMI);
-        int TDEE = calcTDEE(currentActivity, BMR);
-        TDEEString = Integer.toString(TDEE);
-        calorieGoal = Integer.toString((int) calcCalorieGoal(TDEE, weightGoals));
+        if (!mFullNameField.getText().toString().equals("") && !mBirthdayField.getText().toString().equals("") &&
+                realHeight > 0 && realWeight > 0) {
+
+            fullName = mFullNameField.getText().toString().trim();
+            birthdate = mBirthdayField.getText().toString().trim();
+            height = convertHeighttoCm(mHeightEditText.getText().toString());
+            weight = convertWeighttoKg(mWeightEditText.getText().toString());
+            int BMR = calcBMR(realWeight, realHeight, Integer.parseInt(usersAgeString), gender);
+            System.out.println(usersAgeString + " users age");
+            BMRString = Integer.toString(BMR);
+            int BMI = calcBMI(realWeight, realHeight);
+            BMIString = Integer.toString(BMI);
+            int TDEE = calcTDEE(currentActivity, BMR);
+            TDEEString = Integer.toString(TDEE);
+            calorieGoal = Integer.toString((int) calcCalorieGoal(TDEE, weightGoals));
+
+        }
 
 
         Intent intent = new Intent(DetailsSignUpActivity.this, ActivateAccountActivity.class);
@@ -481,12 +504,47 @@ public class DetailsSignUpActivity extends AppCompatActivity implements View.OnC
         System.out.println(gender);
         System.out.println(currentActivity);
         System.out.println(weightGoals);
-        startActivity(intent);
 
+
+        if (fullName != null && mBirthdayField != null &&
+                realHeight > 0 && realWeight > 0 &&
+                (maleRadio.isChecked() || femaleRadio.isChecked())) {
+
+            startActivity(intent);
+
+        } else {
+
+
+            Toast.makeText(this, "error", Toast.LENGTH_SHORT).show();
+
+        }
+
+
+
+    }
+
+    private String getAge(int year, int month, int day){
+        Calendar dob = Calendar.getInstance();
+        Calendar today = Calendar.getInstance();
+
+        dob.set(year, month, day);
+
+        int age = today.get(Calendar.YEAR) - dob.get(Calendar.YEAR);
+
+        if (today.get(Calendar.DAY_OF_YEAR) < dob.get(Calendar.DAY_OF_YEAR)){
+            age--;
+        }
+
+        Integer ageInt = new Integer(age);
+        String ageS = ageInt.toString();
+
+        return ageS;
     }
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+
+        usersAgeString = getAge(year, month, dayOfMonth);
 
         String date = dayOfMonth + "/" + (month + 1) + "/" + year;
 

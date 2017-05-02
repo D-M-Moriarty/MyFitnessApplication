@@ -77,8 +77,7 @@ public class AddFoodActivity extends AppCompatActivity implements AdapterView.On
                 System.out.println("Add food activity " + meal);
             }
 
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -93,7 +92,6 @@ public class AddFoodActivity extends AppCompatActivity implements AdapterView.On
         qtyMultiplier = Integer.parseInt(String.valueOf(qtyEditText.getText()));
 
 
-
         // listening for text change
         qtyEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -103,7 +101,6 @@ public class AddFoodActivity extends AppCompatActivity implements AdapterView.On
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
 
 
             }
@@ -144,20 +141,17 @@ public class AddFoodActivity extends AppCompatActivity implements AdapterView.On
                     carbDouble *= qtyMultiplier;
 
                     energyValue.setText(energyInt + " cals");
-                    proteinValue.setText(String.format("%.2f",proteinDouble) + "\nProtein(g)");
+                    proteinValue.setText(String.format("%.2f", proteinDouble) + "\nProtein(g)");
                     //sugarValue.setText(values.get(2));
-                    fatValue.setText(String.format("%.2f",fatDouble) + "\nFat(g)");
-                    carbValue.setText(String.format("%.2f",carbDouble) + "\nCarbs(g)");
+                    fatValue.setText(String.format("%.2f", fatDouble) + "\nFat(g)");
+                    carbValue.setText(String.format("%.2f", carbDouble) + "\nCarbs(g)");
 
 
                 }
 
 
-
-
             }
         });
-
 
 
         nameTextView.setText(name);
@@ -191,10 +185,30 @@ public class AddFoodActivity extends AppCompatActivity implements AdapterView.On
         carbValue.setText(values.get(4) + "\nCarbs(g)");
 
         // setting numeric values to change later
-        energyInt = Integer.parseInt(values.get(0));
-        proteinDouble = Double.parseDouble(values.get(1));
-        fatDouble = Double.parseDouble(values.get(3));
-        carbDouble = Double.parseDouble(values.get(4));
+        try {
+            energyInt = Integer.parseInt(values.get(0));
+            proteinDouble = Double.parseDouble(values.get(1));
+            fatDouble = Double.parseDouble(values.get(3));
+            carbDouble = Double.parseDouble(values.get(4));
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            if (values.get(0).equals("--")) {
+                energyInt = 0;
+            }
+
+            if (values.get(1).equals("--")) {
+                proteinDouble = 0;
+            }
+
+            if (values.get(3).equals("--")) {
+                fatDouble = 0;
+            }
+
+            if (values.get(4).equals("--")) {
+                carbDouble = 0;
+            }
+        }
 
         spinner.setSelection(0);
 
@@ -205,17 +219,17 @@ public class AddFoodActivity extends AppCompatActivity implements AdapterView.On
     public boolean dispatchTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             View v = getCurrentFocus();
-            if ( v instanceof EditText) {
+            if (v instanceof EditText) {
                 Rect outRect = new Rect();
                 v.getGlobalVisibleRect(outRect);
-                if (!outRect.contains((int)event.getRawX(), (int)event.getRawY())) {
+                if (!outRect.contains((int) event.getRawX(), (int) event.getRawY())) {
                     v.clearFocus();
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
                 }
             }
         }
-        return super.dispatchTouchEvent( event );
+        return super.dispatchTouchEvent(event);
     }
 
     // log the selected food
@@ -239,47 +253,72 @@ public class AddFoodActivity extends AppCompatActivity implements AdapterView.On
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-        switch (position) {
+        try {
 
-            case 0:
+            switch (position) {
 
-                divideBy100 = false;
+                case 0:
 
-                // setting numeric values to change later
-                energyInt = Integer.parseInt(values.get(0));
-                proteinDouble = Double.parseDouble(values.get(1));
-                fatDouble = Double.parseDouble(values.get(3));
-                carbDouble = Double.parseDouble(values.get(4));
-                energyInt *= qtyMultiplier;
-                proteinDouble *= qtyMultiplier;
-                fatDouble *= qtyMultiplier;
-                carbDouble *= qtyMultiplier;
-                energyValue.setText(energyInt + " cals");
-                proteinValue.setText(String.format("%.2f",proteinDouble) + "\nProtein(g)");
-                //sugarValue.setText(values.get(2));
-                fatValue.setText(String.format("%.2f",fatDouble) + "\nFat(g)");
-                carbValue.setText(String.format("%.2f",carbDouble) + "\nCarbs(g)");
+                    divideBy100 = false;
+
+                    // setting numeric values to change later
+                    energyInt = Integer.parseInt(values.get(0));
+                    proteinDouble = Double.parseDouble(values.get(1));
+                    if (!values.get(3).equals("--"))
+                        fatDouble = Double.parseDouble(values.get(3));
+                    carbDouble = Double.parseDouble(values.get(4));
+                    energyInt *= qtyMultiplier;
+                    proteinDouble *= qtyMultiplier;
+                    fatDouble *= qtyMultiplier;
+                    carbDouble *= qtyMultiplier;
+                    energyValue.setText(energyInt + " cals");
+                    proteinValue.setText(String.format("%.2f", proteinDouble) + "\nProtein(g)");
+                    //sugarValue.setText(values.get(2));
+                    fatValue.setText(String.format("%.2f", fatDouble) + "\nFat(g)");
+                    carbValue.setText(String.format("%.2f", carbDouble) + "\nCarbs(g)");
 
 
-                break;
-            case 1:
+                    break;
+                case 1:
 
-                divideBy100 = true;
+                    divideBy100 = true;
 
-                energyInt /= 100;
-                proteinDouble /= 100;
-                fatDouble /= 100;
-                carbDouble /= 100;
-                energyValue.setText(energyInt + " cals");
-                proteinValue.setText(String.format("%.2f",proteinDouble) + "\nProtein(g)");
-                //sugarValue.setText(values.get(2));
-                fatValue.setText(String.format("%.2f",fatDouble) + "\nFat(g)");
-                carbValue.setText(String.format("%.2f",carbDouble) + "\nCarbs(g)");
+                    energyInt /= 100;
+                    proteinDouble /= 100;
+                    if (fatDouble > 0)
+                        fatDouble /= 100;
+                    carbDouble /= 100;
+                    energyValue.setText(energyInt + " cals");
+                    proteinValue.setText(String.format("%.2f", proteinDouble) + "\nProtein(g)");
+                    //sugarValue.setText(values.get(2));
+                    fatValue.setText(String.format("%.2f", fatDouble) + "\nFat(g)");
+                    carbValue.setText(String.format("%.2f", carbDouble) + "\nCarbs(g)");
 
-                break;
+                    break;
 
+
+            }
 
         }
+        catch (Exception e) {
+            if (values.get(0).equals("--")) {
+                energyInt = 0;
+            }
+
+            if (values.get(1).equals("--")) {
+                proteinDouble = 0;
+            }
+
+            if (values.get(3).equals("--")) {
+                fatDouble = 0;
+            }
+
+            if (values.get(4).equals("--")) {
+                carbDouble = 0;
+            }
+        }
+
+
 
     }
 

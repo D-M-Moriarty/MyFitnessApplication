@@ -146,6 +146,7 @@ public class RunningTracker extends FragmentActivity implements OnMapReadyCallba
             }
         });
 
+
 //        startDurationTimerBtn.setOnLongClickListener(new View.OnLongClickListener() {
 //            @Override
 //            public boolean onLongClick(View v) {

@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.darrenmoriarty.myfitnessapp.HomeScreen;
 import com.darrenmoriarty.myfitnessapp.R;
 import com.darrenmoriarty.myfitnessapp.pageractivities.MainHomePagerActivity;
+import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -26,7 +27,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText mPasswordField;
     private Button mLoginButton;
     private Button mFaceBookLogin;
-    private Button mGoogleLogin;
+    private SignInButton mGoogleLogin;
 
     // [START declare_auth]
     private FirebaseAuth mAuth;
@@ -54,7 +55,7 @@ public class LoginActivity extends AppCompatActivity {
         // Buttons
         mLoginButton = (Button) findViewById(R.id.loginButton);
         mFaceBookLogin = (Button) findViewById(R.id.facebookLoginButton);
-        mGoogleLogin = (Button) findViewById(R.id.googleLoginButton);
+        mGoogleLogin = (SignInButton) findViewById(R.id.googleLoginButton);
 
         mLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -7,9 +7,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.darrenmoriarty.myfitnessapp.HomeScreen;
@@ -26,7 +30,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     // Fields
     private EditText mPasswordField;
-    private EditText mEmailField;
+    private AutoCompleteTextView mEmailField;
     private EditText mUsername;
 
     private String username;
@@ -83,7 +87,16 @@ public class SignUpActivity extends AppCompatActivity {
 
         // Text Fields
         mPasswordField = (EditText) findViewById(R.id.passwordEditText);
-        mEmailField = (EditText) findViewById(R.id.emailEditText);
+        mPasswordField.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
+                if (id == EditorInfo.IME_NULL) {
+                    return true;
+                }
+                return false;
+            }
+        });
+        mEmailField = (AutoCompleteTextView) findViewById(R.id.emailEditText);
         mUsername = (EditText) findViewById(R.id.usernameEditText);
 
         // Sign Up Button
@@ -138,6 +151,16 @@ public class SignUpActivity extends AppCompatActivity {
                                 Toast.makeText(SignUpActivity.this, "Failed to create user",
                                         Toast.LENGTH_SHORT).show();
 
+                                if (!isEmailValid(email)) {
+                                    mEmailField.setError("Invalid Email");
+                                }
+
+                                if (!isPasswordValid(password)) {
+                                    mPasswordField.setError("Invalid password");
+                                }
+
+                                mProgressDialog.dismiss();
+
                             } else {
 
                                 String userId = mAuth.getCurrentUser().getUid();
@@ -190,8 +213,16 @@ public class SignUpActivity extends AppCompatActivity {
 
         } else {
 
-
+            Toast.makeText(this, "Fill out all fields", Toast.LENGTH_SHORT).show();
 
         }
+    }
+
+    private boolean isEmailValid(String email) {
+        return email.contains("@");
+    }
+
+    private boolean isPasswordValid(String password) {
+        return password.length() > 4;
     }
 }
