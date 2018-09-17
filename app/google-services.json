@@ -23,6 +23,14 @@
           }
         },
         {
+          "client_id": "970461132665-gts0rmg8ctpqo2dve5ev48irdu9qje8i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.darrenmoriarty.myfitnessapp",
+            "certificate_hash": "041873efc6e01c1f9f265039ca3165b77e524743"
+          }
+        },
+        {
           "client_id": "970461132665-8g7epv47iclvjfblet37psl3ce7liei5.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -48,7 +56,8 @@
         "ads_service": {
           "status": 2
         }
-      }
+      },
+      "admob_app_id": "ca-app-pub-5785022039010486~7635992658"
     }
   ],
   "configuration_version": "1"
